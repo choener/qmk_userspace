@@ -31,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * Keep QC_BOOT until we have a stable system
      */
     [_BASE] = LAYOUT_split_3x6_3_ex2(
-      XXXXXXX,         KC_Q,         KC_W,         KC_F,         KC_P,    KC_B, QK_BOOT,        XXXXXXX,                  KC_J,         KC_L,         KC_U,         KC_Y,      XXXXXXX, XXXXXXX,
+      XXXXXXX,         KC_Q,         KC_W,         KC_F,         KC_P,    KC_B, QK_BOOT,        QK_BOOT,                  KC_J,         KC_L,         KC_U,         KC_Y,      XXXXXXX, XXXXXXX,
       XXXXXXX, LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T),    KC_G, XXXXXXX,        XXXXXXX,                  KC_M, LSFT_T(KC_N), LCTL_T(KC_E), LALT_T(KC_I), LGUI_T(KC_O), XXXXXXX,
       XXXXXXX,         KC_Z,         KC_X,         KC_C,         KC_D,    KC_V,                                           KC_K,         KC_H,      XXXXXXX,      XXXXXXX,      XXXXXXX, XXXXXXX,
                                                               XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX, LT(_NUM,KC_BACKSPACE),      XXXXXXX
@@ -62,6 +62,73 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
   [3] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(RM_VALD, RM_VALU), ENCODER_CCW_CW(KC_RGHT, KC_LEFT), },
 };
 #endif
+
+
+void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8_t mods, uint8_t index, uint16_t keycode) {
+    rgb_matrix_set_color(index, RGB_OFF);
+    // In base layer, light up keys in a fancy way
+    if (layer == 0) {
+        switch (keycode) {
+            case KC_A:
+            case KC_R:
+            case KC_S:
+            case KC_T:
+                rgb_matrix_set_color(index, RGB_PURPLE);
+                break;
+            default:
+                if (keycode > XXXXXXX) {
+                    rgb_matrix_set_color(index, RGB_BLUE);
+                };
+        };
+        return;
+        //if (keycode > XXXXXXX) {
+        //    // TODO: calculate color based on: are any modifiers active?
+        //    if (mods & MOD_MASK_SHIFT) {
+        //        rgb_matrix_set_color(index, RGB_RED);
+        //    } else {
+        //        rgb_matrix_set_color(index, RGB_GREEN);
+        //    };
+        //    return;
+        //}
+    }
+};
+
+/*
+ * Callback function that allows setting up the rgb matrix
+ */
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    uint8_t layer = get_highest_layer(layer_state);
+    uint8_t mods = get_mods();
+    for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+        for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+            uint8_t index = g_led_config.matrix_co[row][col];
+            uint16_t keycode = keymap_key_to_keycode(layer, (keypos_t){col,row});
+            if (index >= led_min && index < led_max && index != NO_LED) {
+                rgb_matrix_per_index(led_min, led_max, layer, mods, index, keycode);
+            };
+        };
+    };
+    /*
+    if (get_highest_layer(layer_state) > 0) {
+        uint8_t layer = get_highest_layer(layer_state);
+
+        for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+            for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+                uint8_t index = g_led_config.matrix_co[row][col];
+
+                if (index >= led_min && index < led_max && index != NO_LED &&
+                keymap_key_to_keycode(layer, (keypos_t){col,row}) > KC_TRNS) {
+                    rgb_matrix_set_color(index, RGB_GREEN);
+                }
+            }
+        }
+    }
+    */
+    // nothing to be done
+    return false;
+}
+
 
 
   //,----------------------------------------------------------.                    ,-----------------------------------------------------.
