@@ -22,8 +22,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //#define USE_MATRIX_I2C
 
+/*
+ * Activating quick-tap would enable hold via double-tap
+ */
 //#define QUICK_TAP_TERM 0
-//#define TAPPING_TERM 100
+#define TAPPING_TERM 100
+/*
+ * If a hold-key is down, while another key is pressed and released, count as held.
+ * If the hold-key is instead released before the other key, then handle as two key press events, without the hold event at all
+ */
+#define PERMISSIVE_HOLD
 
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_EFFECT_BREATHING
