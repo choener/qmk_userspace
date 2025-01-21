@@ -22,6 +22,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //#define USE_MATRIX_I2C
 
+#define SPLIT_TRANSPORT_MIRROR
+#define SPLIT_LAYER_STATE_ENABLE
+#define SPLIT_LED_STATE_ENABLE
+#define SPLIT_MODS_ENABLE
+#define SPLIT_ST7565_ENABLE
+#define SPLIT_POINTING_ENABLE
+#define SPLIT_ACTIVITY_ENABLE
+
 /*
  * Activating quick-tap would enable hold via double-tap
  */

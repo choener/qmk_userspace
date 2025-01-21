@@ -32,51 +32,51 @@ enum layers {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //    ┌───────────────┬───────────┬───────────┬───────────┬───────────┬────────────────┬─────────────┐   ┌─────────────┬─────────────────────┬───────────┬───────────┬───────────┬───────────┬────┐
-//    │      no       │     q     │     w     │     f     │     p     │       b        │   QK_BOOT   │   │   QK_BOOT   │          j          │     l     │     u     │     y     │    no     │ no │
+//    │ OSM(MOD_RALT) │     q     │     w     │     f     │     p     │       b        │   QK_BOOT   │   │   QK_BOOT   │          j          │     l     │     u     │     y     │    no     │ no │
 //    ├───────────────┼───────────┼───────────┼───────────┼───────────┼────────────────┼─────────────┤   ├─────────────┼─────────────────────┼───────────┼───────────┼───────────┼───────────┼────┤
 //    │ OSM(MOD_LSFT) │ LGUI_T(a) │ LALT_T(r) │ LCTL_T(s) │ LSFT_T(t) │       g        │  TO(_BASE)  │   │  QK_LEADER  │          m          │ LSFT_T(n) │ LCTL_T(e) │ LALT_T(i) │ LGUI_T(o) │ no │
 //    ├───────────────┼───────────┼───────────┼───────────┼───────────┼────────────────┼─────────────┘   └─────────────┼─────────────────────┼───────────┼───────────┼───────────┼───────────┼────┤
-//    │      no       │     z     │     x     │     c     │     d     │       v        │                               │          k          │     h     │     ,     │     .     │    no     │ no │
+//    │ OSM(MOD_LCTL) │     z     │     x     │     c     │     d     │       v        │                               │          k          │     h     │     ,     │     .     │    no     │ no │
 //    └───────────────┴───────────┴───────────┴───────────┼───────────┼────────────────┼─────────────┐   ┌─────────────┼─────────────────────┼───────────┼───────────┴───────────┴───────────┴────┘
 //                                                        │ TO(_MOVE) │ LT(_MOVE, spc) │ LSFT_T(esc) │   │ LSFT_T(ent) │ LT(_NUM, bACKSPACE) │ TO(_NUM)  │
 //                                                        └───────────┴────────────────┴─────────────┘   └─────────────┴─────────────────────┴───────────┘
 [_BASE] = LAYOUT_split_3x6_3_ex2(
-  XXXXXXX       , KC_Q         , KC_W         , KC_F         , KC_P         , KC_B                , QK_BOOT           ,     QK_BOOT          , KC_J                   , KC_L         , KC_U         , KC_Y         , XXXXXXX      , XXXXXXX,
+  OSM(MOD_RALT) , KC_Q         , KC_W         , KC_F         , KC_P         , KC_B                , QK_BOOT           ,     QK_BOOT          , KC_J                   , KC_L         , KC_U         , KC_Y         , XXXXXXX      , XXXXXXX,
   OSM(MOD_LSFT) , LGUI_T(KC_A) , LALT_T(KC_R) , LCTL_T(KC_S) , LSFT_T(KC_T) , KC_G                , TO(_BASE)         ,     QK_LEADER        , KC_M                   , LSFT_T(KC_N) , LCTL_T(KC_E) , LALT_T(KC_I) , LGUI_T(KC_O) , XXXXXXX,
-  XXXXXXX       , KC_Z         , KC_X         , KC_C         , KC_D         , KC_V                ,                                            KC_K                   , KC_H         , KC_COMMA     , KC_DOT       , XXXXXXX      , XXXXXXX,
+  OSM(MOD_LCTL) , KC_Z         , KC_X         , KC_C         , KC_D         , KC_V                ,                                            KC_K                   , KC_H         , KC_COMMA     , KC_DOT       , XXXXXXX      , XXXXXXX,
                                                                TO(_MOVE)    , LT(_MOVE, KC_SPACE) , LSFT_T(KC_ESCAPE) ,     LSFT_T(KC_ENTER) , LT(_NUM, KC_BACKSPACE) , TO(_NUM)
 ),
 
-//    ┌───────────────┬───────────┬───┬───┬───────────┬─────┬─────────────┐   ┌─────────────┬───────────┬───────────┬────┬────┬────┬────┐
-//    │      no       │     \     │ 7 │ 8 │     9     │  0  │     no      │   │     no      │    no     │    no     │ no │ no │ no │ no │
-//    ├───────────────┼───────────┼───┼───┼───────────┼─────┼─────────────┤   ├─────────────┼───────────┼───────────┼────┼────┼────┼────┤
-//    │ OSM(MOD_LSFT) │ sEMICOLON │ 4 │ 5 │     6     │  =  │  TO(_BASE)  │   │     no      │    no     │     '     │ [  │ ]  │ no │ no │
-//    ├───────────────┼───────────┼───┼───┼───────────┼─────┼─────────────┘   └─────────────┼───────────┼───────────┼────┼────┼────┼────┤
-//    │      no       │     /     │ 1 │ 2 │     3     │  -  │                               │    no     │     `     │ ,  │ .  │ no │ no │
-//    └───────────────┴───────────┴───┴───┼───────────┼─────┼─────────────┐   ┌─────────────┼───────────┼───────────┼────┴────┴────┴────┘
-//                                        │ TO(_MOVE) │ spc │ LSFT_T(esc) │   │ LSFT_T(ent) │ bACKSPACE │ TO(_BASE) │
-//                                        └───────────┴─────┴─────────────┘   └─────────────┴───────────┴───────────┘
+//    ┌───────────────┬───────────────────┬───────────┬───────────┬───────────┬─────┬─────────────┐   ┌─────────────┬───────────┬───────────┬───────────┬───────────┬────────────┬────┐
+//    │      no       │         \         │     7     │     8     │     9     │  0  │     no      │   │     no      │    no     │    no     │    no     │    no     │     no     │ no │
+//    ├───────────────┼───────────────────┼───────────┼───────────┼───────────┼─────┼─────────────┤   ├─────────────┼───────────┼───────────┼───────────┼───────────┼────────────┼────┤
+//    │ OSM(MOD_LSFT) │ LGUI_T(sEMICOLON) │ LALT_T(4) │ LCTL_T(5) │ LSFT_T(6) │  =  │  TO(_BASE)  │   │     no      │    no     │ LSFT_T(') │ LCTL_T([) │ LALT_T(]) │ LGUI_T(no) │ no │
+//    ├───────────────┼───────────────────┼───────────┼───────────┼───────────┼─────┼─────────────┘   └─────────────┼───────────┼───────────┼───────────┼───────────┼────────────┼────┤
+//    │ OSM(MOD_LCTL) │         /         │     1     │     2     │     3     │  -  │                               │    no     │     `     │     ,     │     .     │     no     │ no │
+//    └───────────────┴───────────────────┴───────────┴───────────┼───────────┼─────┼─────────────┐   ┌─────────────┼───────────┼───────────┼───────────┴───────────┴────────────┴────┘
+//                                                                │ TO(_MOVE) │ spc │ LSFT_T(esc) │   │ LSFT_T(ent) │ bACKSPACE │ TO(_BASE) │
+//                                                                └───────────┴─────┴─────────────┘   └─────────────┴───────────┴───────────┘
 [_NUM] = LAYOUT_split_3x6_3_ex2(
-  XXXXXXX       , KC_BACKSLASH , KC_7 , KC_8 , KC_9      , KC_0     , XXXXXXX           ,     XXXXXXX          , XXXXXXX      , XXXXXXX   , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX,
-  OSM(MOD_LSFT) , KC_SEMICOLON , KC_4 , KC_5 , KC_6      , KC_EQUAL , TO(_BASE)         ,     XXXXXXX          , XXXXXXX      , KC_QUOTE  , KC_LBRC  , KC_RBRC , XXXXXXX , XXXXXXX,
-  XXXXXXX       , KC_SLASH     , KC_1 , KC_2 , KC_3      , KC_MINUS ,                                            XXXXXXX      , KC_GRAVE  , KC_COMMA , KC_DOT  , XXXXXXX , XXXXXXX,
-                                               TO(_MOVE) , KC_SPACE , LSFT_T(KC_ESCAPE) ,     LSFT_T(KC_ENTER) , KC_BACKSPACE , TO(_BASE)
+  XXXXXXX       , KC_BACKSLASH         , KC_7         , KC_8         , KC_9         , KC_0     , XXXXXXX           ,     XXXXXXX          , XXXXXXX      , XXXXXXX          , XXXXXXX         , XXXXXXX         , XXXXXXX         , XXXXXXX,
+  OSM(MOD_LSFT) , LGUI_T(KC_SEMICOLON) , LALT_T(KC_4) , LCTL_T(KC_5) , LSFT_T(KC_6) , KC_EQUAL , TO(_BASE)         ,     XXXXXXX          , XXXXXXX      , LSFT_T(KC_QUOTE) , LCTL_T(KC_LBRC) , LALT_T(KC_RBRC) , LGUI_T(XXXXXXX) , XXXXXXX,
+  OSM(MOD_LCTL) , KC_SLASH             , KC_1         , KC_2         , KC_3         , KC_MINUS ,                                            XXXXXXX      , KC_GRAVE         , KC_COMMA        , KC_DOT          , XXXXXXX         , XXXXXXX,
+                                                                       TO(_MOVE)    , KC_SPACE , LSFT_T(KC_ESCAPE) ,     LSFT_T(KC_ENTER) , KC_BACKSPACE , TO(_BASE)
 ),
 
-//    ┌───────────────┬────┬────┬────┬───────────┬─────┬─────────────┐   ┌─────────────┬───────────┬──────────┬─────────┬───────────┬──────┬────┐
-//    │      no       │ no │ no │ no │    no     │ no  │     no      │   │     no      │    no     │   home   │ pAGE_UP │ pAGE_DOWN │ end  │ no │
-//    ├───────────────┼────┼────┼────┼───────────┼─────┼─────────────┤   ├─────────────┼───────────┼──────────┼─────────┼───────────┼──────┼────┤
-//    │ OSM(MOD_LSFT) │ no │ no │ no │    no     │ no  │  TO(_BASE)  │   │     no      │    no     │   left   │   up    │   down    │ rght │ no │
-//    ├───────────────┼────┼────┼────┼───────────┼─────┼─────────────┘   └─────────────┼───────────┼──────────┼─────────┼───────────┼──────┼────┤
-//    │      no       │ no │ no │ no │    no     │ no  │                               │    no     │    no    │   no    │    no     │  no  │ no │
-//    └───────────────┴────┴────┴────┼───────────┼─────┼─────────────┐   ┌─────────────┼───────────┼──────────┼─────────┴───────────┴──────┴────┘
-//                                   │ TO(_BASE) │ spc │ LSFT_T(esc) │   │ LSFT_T(ent) │ bACKSPACE │ TO(_NUM) │
-//                                   └───────────┴─────┴─────────────┘   └─────────────┴───────────┴──────────┘
+//    ┌───────────────┬────────────┬────────────┬────────────┬────────────┬─────┬─────────────┐   ┌─────────────┬───────────┬──────────────┬────────────┬──────────────┬──────────────┬────┐
+//    │      no       │     no     │     no     │     no     │     no     │ no  │     no      │   │     no      │    no     │     home     │  pAGE_UP   │  pAGE_DOWN   │     end      │ no │
+//    ├───────────────┼────────────┼────────────┼────────────┼────────────┼─────┼─────────────┤   ├─────────────┼───────────┼──────────────┼────────────┼──────────────┼──────────────┼────┤
+//    │ OSM(MOD_LSFT) │ LGUI_T(no) │ LALT_T(no) │ LCTL_T(no) │ LSFT_T(no) │ no  │  TO(_BASE)  │   │     no      │    no     │ LSFT_T(left) │ LCTL_T(up) │ LALT_T(down) │ LGUI_T(rght) │ no │
+//    ├───────────────┼────────────┼────────────┼────────────┼────────────┼─────┼─────────────┘   └─────────────┼───────────┼──────────────┼────────────┼──────────────┼──────────────┼────┤
+//    │ OSM(MOD_LCTL) │     no     │     no     │     no     │     no     │ no  │                               │    no     │      no      │     no     │      no      │      no      │ no │
+//    └───────────────┴────────────┴────────────┴────────────┼────────────┼─────┼─────────────┐   ┌─────────────┼───────────┼──────────────┼────────────┴──────────────┴──────────────┴────┘
+//                                                           │ TO(_BASE)  │ spc │ LSFT_T(esc) │   │ LSFT_T(ent) │ bACKSPACE │   TO(_NUM)   │
+//                                                           └────────────┴─────┴─────────────┘   └─────────────┴───────────┴──────────────┘
 [_MOVE] = LAYOUT_split_3x6_3_ex2(
-  XXXXXXX       , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX   , XXXXXXX  , XXXXXXX           ,     XXXXXXX          , XXXXXXX      , KC_HOME  , KC_PAGE_UP , KC_PAGE_DOWN , KC_END   , XXXXXXX,
-  OSM(MOD_LSFT) , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX   , XXXXXXX  , TO(_BASE)         ,     XXXXXXX          , XXXXXXX      , KC_LEFT  , KC_UP      , KC_DOWN      , KC_RIGHT , XXXXXXX,
-  XXXXXXX       , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX   , XXXXXXX  ,                                            XXXXXXX      , XXXXXXX  , XXXXXXX    , XXXXXXX      , XXXXXXX  , XXXXXXX,
-                                                TO(_BASE) , KC_SPACE , LSFT_T(KC_ESCAPE) ,     LSFT_T(KC_ENTER) , KC_BACKSPACE , TO(_NUM)
+  XXXXXXX       , XXXXXXX         , XXXXXXX         , XXXXXXX         , XXXXXXX         , XXXXXXX  , XXXXXXX           ,     XXXXXXX          , XXXXXXX      , KC_HOME         , KC_PAGE_UP    , KC_PAGE_DOWN    , KC_END           , XXXXXXX,
+  OSM(MOD_LSFT) , LGUI_T(XXXXXXX) , LALT_T(XXXXXXX) , LCTL_T(XXXXXXX) , LSFT_T(XXXXXXX) , XXXXXXX  , TO(_BASE)         ,     XXXXXXX          , XXXXXXX      , LSFT_T(KC_LEFT) , LCTL_T(KC_UP) , LALT_T(KC_DOWN) , LGUI_T(KC_RIGHT) , XXXXXXX,
+  OSM(MOD_LCTL) , XXXXXXX         , XXXXXXX         , XXXXXXX         , XXXXXXX         , XXXXXXX  ,                                            XXXXXXX      , XXXXXXX         , XXXXXXX       , XXXXXXX         , XXXXXXX          , XXXXXXX,
+                                                                        TO(_BASE)       , KC_SPACE , LSFT_T(KC_ESCAPE) ,     LSFT_T(KC_ENTER) , KC_BACKSPACE , TO(_NUM)
 )
 };
 
