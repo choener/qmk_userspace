@@ -21,39 +21,54 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 enum layers {
     _BASE,
     _NUM,
-    _EMPTY
+    _MOVE,
 };
 
 // NOTE: If left and right modifiers are pressed together, they are all interpreted as right modifiers!
 // TODO: Have keys that switch completely to a new layer, then the option to switch back to the base layer... fewer layers in total would be great in this case! Maybe the outermost column(s)?, maybe up/reset/leader?
 // TODO: Leader key for variety of functions: <L>s[qw] to switch between VTY1,7 (in case I have wakeup problems)
+// TODO: if three main layers are enough, put layer switch onto the thumbs
+// TODO: need Alt-Gr to allow character variants
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
-     * Keep QC_BOOT until we have a stable system
+     * Keep QK_BOOT until we have a stable system
      */
     [_BASE] = LAYOUT_split_3x6_3_ex2(
-      XXXXXXX,         KC_Q,         KC_W,         KC_F,         KC_P,     KC_B, QK_BOOT,        QK_BOOT,                  KC_J,         KC_L,         KC_U,         KC_Y,      XXXXXXX, XXXXXXX,
-      XXXXXXX, LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T),     KC_G, XXXXXXX,        XXXXXXX,                  KC_M, LSFT_T(KC_N), LCTL_T(KC_E), LALT_T(KC_I), LGUI_T(KC_O), XXXXXXX,
-      XXXXXXX,         KC_Z,         KC_X,         KC_C,         KC_D,     KC_V,                                           KC_K,         KC_H,     KC_COMMA,       KC_DOT,      XXXXXXX, XXXXXXX,
-                                                            KC_ESCAPE, KC_SPACE, XXXXXXX,       KC_ENTER, LT(_NUM,KC_BACKSPACE),    QK_LEADER
+      XXXXXXX,         KC_Q,         KC_W,         KC_F,         KC_P,               KC_B, QK_BOOT,       QK_BOOT,                  KC_J,         KC_L,         KC_U,         KC_Y,      XXXXXXX, XXXXXXX,
+      OSM(MOD_LSFT), LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T),               KC_G, TO(_BASE),     QK_LEADER,                  KC_M, LSFT_T(KC_N), LCTL_T(KC_E), LALT_T(KC_I), LGUI_T(KC_O), XXXXXXX,
+      XXXXXXX,         KC_Z,         KC_X,         KC_C,         KC_D,               KC_V,                                           KC_K,         KC_H,     KC_COMMA,       KC_DOT,      XXXXXXX, XXXXXXX,
+                                                            TO(_MOVE), LT(_MOVE,KC_SPACE), LSFT_T(KC_ESCAPE),       LSFT_T(KC_ENTER), LT(_NUM,KC_BACKSPACE), TO(_NUM)
   ),
     /*
      * Shift-9 and Shift-0 provide (,) next to each other
      * TODO: Check if LSFT_T(OSM(MOD_LSFT)) is convenient: one-shot on quick press, but if held then same key but held
+     * TODO: Need to re-enable shift (on rhs, or maybe on space or escape?) to allow writing shifted symbols)
+     * TODO: consider having one-shot shift, space, backspace on this layer
+     * TODO: need to add shift-and friends hold buttons
      */
     [_NUM] = LAYOUT_split_3x6_3_ex2(
-      XXXXXXX,      XXXXXXX,    KC_7,    KC_8,    KC_9,     KC_0, XXXXXXX,    XXXXXXX, XXXXXXX, KC_HOME, KC_PAGE_UP, KC_PAGE_DOWN,   KC_END, XXXXXXX,
-      XXXXXXX, KC_SEMICOLON,    KC_4,    KC_5,    KC_6, KC_EQUAL, XXXXXXX,    XXXXXXX, XXXXXXX, KC_LEFT,      KC_UP,      KC_DOWN, KC_RIGHT, XXXXXXX,
-      XXXXXXX,     KC_SLASH,    KC_1,    KC_2,    KC_3, KC_MINUS,                      XXXXXXX, XXXXXXX,    _______,      _______,  XXXXXXX,  XXXXXXX,
-                                      XXXXXXX, XXXXXXX,  XXXXXXX,                      XXXXXXX, XXXXXXX,    XXXXXXX
+      XXXXXXX, KC_BACKSLASH,    KC_7,    KC_8,    KC_9,     KC_0, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      OSM(MOD_LSFT), KC_SEMICOLON,    KC_4,    KC_5,    KC_6, KC_EQUAL, TO(_BASE),    XXXXXXX, XXXXXXX, KC_QUOTE,  KC_LBRC, KC_RBRC, XXXXXXX, XXXXXXX,
+      XXXXXXX,     KC_SLASH,    KC_1,    KC_2,    KC_3, KC_MINUS,                      XXXXXXX, KC_GRAVE, KC_COMMA,  KC_DOT, XXXXXXX,  XXXXXXX,
+                                      TO(_MOVE), KC_SPACE,  LSFT_T(KC_ESCAPE),                      LSFT_T(KC_ENTER),  KC_BACKSPACE,  TO(_BASE)
   ),
-    [_EMPTY] = LAYOUT_split_3x6_3_ex2(
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    /*
+     * We need a layer for movements, since there are too many special symbols to cram into just _NUM with movements
+     * TODO: here, the main modifiers need to be shifted down. Possibly in the other layers, too?
+     */
+    [_MOVE] = LAYOUT_split_3x6_3_ex2(
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, KC_HOME, KC_PAGE_UP, KC_PAGE_DOWN,   KC_END, XXXXXXX,
+      OSM(MOD_LSFT), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_BASE),    XXXXXXX, XXXXXXX, KC_LEFT,      KC_UP,      KC_DOWN, KC_RIGHT, XXXXXXX,
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                 XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX
-       ),
+                                      TO(_BASE), KC_SPACE,  LSFT_T(KC_ESCAPE),                      LSFT_T(KC_ENTER), KC_BACKSPACE, TO(_NUM)
+  ),
+//    [_EMPTY] = LAYOUT_split_3x6_3_ex2(
+//      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+//      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+//      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+//                                 XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX
+//       ),
 };
 
 #ifdef ENCODER_MAP_ENABLE
