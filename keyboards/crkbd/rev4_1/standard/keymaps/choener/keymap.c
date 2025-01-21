@@ -81,9 +81,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
+const key_override_t escape_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_ESCAPE, KC_TAB);
 // This globally defines all key overrides to be used
 const key_override_t *key_overrides[] = {
-    &delete_key_override
+    &delete_key_override,
+    &escape_key_override,
 };
 
 
