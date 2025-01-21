@@ -25,26 +25,28 @@ enum layers {
 };
 
 // NOTE: If left and right modifiers are pressed together, they are all interpreted as right modifiers!
+// TODO: Have keys that switch completely to a new layer, then the option to switch back to the base layer... fewer layers in total would be great in this case! Maybe the outermost column(s)?, maybe up/reset/leader?
+// TODO: Leader key for variety of functions: <L>s[qw] to switch between VTY1,7 (in case I have wakeup problems)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * Keep QC_BOOT until we have a stable system
      */
     [_BASE] = LAYOUT_split_3x6_3_ex2(
-      XXXXXXX,         KC_Q,         KC_W,         KC_F,         KC_P,    KC_B, QK_BOOT,        QK_BOOT,                  KC_J,         KC_L,         KC_U,         KC_Y,      XXXXXXX, XXXXXXX,
-      XXXXXXX, LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T),    KC_G, XXXXXXX,        XXXXXXX,                  KC_M, LSFT_T(KC_N), LCTL_T(KC_E), LALT_T(KC_I), LGUI_T(KC_O), XXXXXXX,
-      XXXXXXX,         KC_Z,         KC_X,         KC_C,         KC_D,    KC_V,                                           KC_K,         KC_H,      XXXXXXX,      XXXXXXX,      XXXXXXX, XXXXXXX,
-                                                              XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX, LT(_NUM,KC_BACKSPACE),      XXXXXXX
+      XXXXXXX,         KC_Q,         KC_W,         KC_F,         KC_P,     KC_B, QK_BOOT,        QK_BOOT,                  KC_J,         KC_L,         KC_U,         KC_Y,      XXXXXXX, XXXXXXX,
+      XXXXXXX, LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T),     KC_G, XXXXXXX,        XXXXXXX,                  KC_M, LSFT_T(KC_N), LCTL_T(KC_E), LALT_T(KC_I), LGUI_T(KC_O), XXXXXXX,
+      XXXXXXX,         KC_Z,         KC_X,         KC_C,         KC_D,     KC_V,                                           KC_K,         KC_H,     KC_COMMA,       KC_DOT,      XXXXXXX, XXXXXXX,
+                                                            KC_ESCAPE, KC_SPACE, XXXXXXX,       KC_ENTER, LT(_NUM,KC_BACKSPACE),    QK_LEADER
   ),
     /*
      * Shift-9 and Shift-0 provide (,) next to each other
      * TODO: Check if LSFT_T(OSM(MOD_LSFT)) is convenient: one-shot on quick press, but if held then same key but held
      */
     [_NUM] = LAYOUT_split_3x6_3_ex2(
-      XXXXXXX, XXXXXXX,    KC_7,    KC_8,    KC_9,     KC_0, XXXXXXX,    XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-      XXXXXXX, XXXXXXX,    KC_4,    KC_5,    KC_6, KC_EQUAL, XXXXXXX,    XXXXXXX, XXXXXXX, LSFT_T(OSM(MOD_LSFT)), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-      XXXXXXX, XXXXXXX,    KC_1,    KC_2,    KC_3, KC_MINUS,                      XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                 XXXXXXX, XXXXXXX,  XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX
+      XXXXXXX,      XXXXXXX,    KC_7,    KC_8,    KC_9,     KC_0, XXXXXXX,    XXXXXXX, XXXXXXX, KC_HOME, KC_PAGE_UP, KC_PAGE_DOWN,   KC_END, XXXXXXX,
+      XXXXXXX, KC_SEMICOLON,    KC_4,    KC_5,    KC_6, KC_EQUAL, XXXXXXX,    XXXXXXX, XXXXXXX, KC_LEFT,      KC_UP,      KC_DOWN, KC_RIGHT, XXXXXXX,
+      XXXXXXX,     KC_SLASH,    KC_1,    KC_2,    KC_3, KC_MINUS,                      XXXXXXX, XXXXXXX,    _______,      _______,  XXXXXXX,  XXXXXXX,
+                                      XXXXXXX, XXXXXXX,  XXXXXXX,                      XXXXXXX, XXXXXXX,    XXXXXXX
   ),
     [_EMPTY] = LAYOUT_split_3x6_3_ex2(
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -63,34 +65,44 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 };
 #endif
 
-
+// TODO: Probably need to order these better!
 void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8_t mods, uint8_t index, uint16_t keycode) {
-    rgb_matrix_set_color(index, RGB_OFF);
-    // In base layer, light up keys in a fancy way
-    if (layer == 0) {
-        switch (keycode) {
-            case KC_A:
-            case KC_R:
-            case KC_S:
-            case KC_T:
-                rgb_matrix_set_color(index, RGB_PURPLE);
-                break;
-            default:
-                if (keycode > XXXXXXX) {
-                    rgb_matrix_set_color(index, RGB_BLUE);
-                };
-        };
-        return;
-        //if (keycode > XXXXXXX) {
-        //    // TODO: calculate color based on: are any modifiers active?
-        //    if (mods & MOD_MASK_SHIFT) {
-        //        rgb_matrix_set_color(index, RGB_RED);
-        //    } else {
-        //        rgb_matrix_set_color(index, RGB_GREEN);
-        //    };
-        //    return;
-        //}
-    }
+    uint8_t basekey = QK_MODS_GET_BASIC_KEYCODE(keycode);
+    //always set color to off first
+    if (keycode > XXXXXXX) {
+        rgb_matrix_set_color(index, RGB_CYAN);
+    } else {
+        rgb_matrix_set_color(index, RGB_OFF);
+    };
+    // "unmodified" characters keys (i.e no layer switch or anything fancy)
+    if (keycode >= KC_A && keycode <= KC_Z) {
+        rgb_matrix_set_color(index, RGB_BLUE);
+    };
+    // digits and others
+    if (basekey >= KC_1 && basekey <= KC_0) {
+        rgb_matrix_set_color(index, RGB_GREEN);
+    };
+    // punctuation, brackets, etc
+    if (basekey >= KC_MINUS && basekey <= KC_SLASH) {
+        rgb_matrix_set_color(index, RGB_TEAL);
+    };
+    // movements
+    if (basekey >= KC_RIGHT && basekey <= KC_UP) {
+        rgb_matrix_set_color(index, RGB_TURQUOISE);
+    };
+    // any special modifiers
+    if (keycode & 0xFF00) {
+        rgb_matrix_set_color(index, RGB_GOLDENROD);
+    };
+    // very special keys
+    switch (keycode) {
+        case QK_LEADER:
+            rgb_matrix_set_color(index, RGB_RED);
+            break;
+        case QK_BOOT:
+            rgb_matrix_set_color(index, RGB_WHITE);
+            break;
+    };
 };
 
 /*
@@ -129,6 +141,10 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     return false;
 }
 
+void keyboard_post_init_user(void) {
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+    rgb_matrix_sethsv_noeeprom(HSV_OFF);
+}
 
 
   //,----------------------------------------------------------.                    ,-----------------------------------------------------.
