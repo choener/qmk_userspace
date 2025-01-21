@@ -65,6 +65,27 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 };
 #endif
 
+const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
+// This globally defines all key overrides to be used
+const key_override_t *key_overrides[] = {
+    &delete_key_override
+};
+
+
+/* Leader sequences allow for vim-like command sequences
+ */
+void leader_end_user(void) {
+    if (leader_sequence_three_keys(KC_R, KC_R, KC_B)) {
+        // reboot into bootloader
+        reset_keyboard();
+    };
+    if (leader_sequence_three_keys(KC_R, KC_R, KC_J)) {
+        // reboot into bootloader
+        reset_keyboard();
+    };
+};
+
+
 // TODO: Probably need to order these better!
 void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8_t mods, uint8_t index, uint16_t keycode) {
     uint8_t basekey = QK_MODS_GET_BASIC_KEYCODE(keycode);
