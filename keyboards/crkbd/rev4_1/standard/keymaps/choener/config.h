@@ -30,6 +30,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SPLIT_POINTING_ENABLE
 #define SPLIT_ACTIVITY_ENABLE
 
+#define LEADER_NO_TIMEOUT
+#define LEADER_PER_KEY_TIMING
+#define LEADER_TIMEOUT 350 // TODO: lower?
+
+//back to base layer after 60 min idle
+#define LAYER_LOCK_IDLE_TIMEOUT 60000
+
 /*
  * Activating quick-tap would enable hold via double-tap
  */
@@ -57,3 +64,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define RGBLIGHT_SAT_STEP 17
     #define RGBLIGHT_VAL_STEP 17
 #endif
+
+
+//LEADER_ENABLE = yes
+//LAYER_LOCK_ENABLE = yes
+//MOUSEKEY_ENABLE = yes
