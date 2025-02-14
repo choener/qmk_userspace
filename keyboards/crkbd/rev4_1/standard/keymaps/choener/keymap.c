@@ -16,6 +16,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*
+ * https://github.com/foostan/crkbd
+ *
+ * https://github.com/qmk/qmk_firmware/blob/master/quantum/keycodes.h
+ * https://github.com/qmk/qmk_firmware/blob/master/quantum/quantum_keycodes.h
+ */
+
 #include QMK_KEYBOARD_H
 
 enum layers {
@@ -25,58 +32,61 @@ enum layers {
 };
 
 // NOTE: If left and right modifiers are pressed together, they are all interpreted as right modifiers!
-// TODO: Use QK_LEAD on other layers to fix those. Move alt-gr to lhs, upper right position. Move l-gui to lhs, upper left position, move alt to rhs, upper left position.
-// TODO: maybe switch modifier keys to rhs as well? There are 4 /5 spaces in place of the arrow keys
 // TODO: Consider better handling / moving of tab-hold keys
 // TODO: Consider freezing all modifiers with qk-lead freeze key?
+// TODO: single tap (, double tap [, triple tap {
+
+/*
+ * https://docs.qmk.fm/mod_tap
+ */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-//    ┌───────────────┬───────────┬───────────┬───────────┬───────────┬─────┬────────────┐   ┌───────────┬─────┬───────────┬───────────┬───────────┬───────────┬──────┐
-//    │ OSM(MOD_RALT) │     q     │     w     │     f     │     p     │  b  │     no     │   │    no     │  j  │     l     │     u     │     y     │    tab    │  up  │
-//    ├───────────────┼───────────┼───────────┼───────────┼───────────┼─────┼────────────┤   ├───────────┼─────┼───────────┼───────────┼───────────┼───────────┼──────┤
-//    │ OSM(MOD_LSFT) │ LGUI_T(a) │ LALT_T(r) │ LCTL_T(s) │ LSFT_T(t) │  g  │ TO(_BASE)  │   │  QK_LEAD  │  m  │ LSFT_T(n) │ LCTL_T(e) │ LALT_T(i) │ LGUI_T(o) │ down │
-//    ├───────────────┼───────────┼───────────┼───────────┼───────────┼─────┼────────────┘   └───────────┼─────┼───────────┼───────────┼───────────┼───────────┼──────┤
-//    │ OSM(MOD_LCTL) │     z     │     x     │     c     │     d     │  v  │                            │  k  │     h     │     ,     │     .     │   left    │ rght │
-//    └───────────────┴───────────┴───────────┴───────────┼───────────┼─────┼────────────┐   ┌───────────┼─────┼───────────┼───────────┴───────────┴───────────┴──────┘
-//                                                        │    esc    │ spc │ OSL(_MOVE) │   │ OSL(_NUM) │ ent │ bACKSPACE │
-//                                                        └───────────┴─────┴────────────┘   └───────────┴─────┴───────────┘
+//    ┌───────────────┬───────────┬───────────┬───────────┬───────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬───────────┬───────────┬───────────────┬───────────────┐
+//    │ OSM(MOD_LGUI) │     q     │     w     │     f     │     p     │  b  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │  j  │     l     │     u     │     y     │      tab      │ OSM(MOD_LGUI) │
+//    ├───────────────┼───────────┼───────────┼───────────┼───────────┼─────┼───────────────┤   ├───────────────┼─────┼───────────┼───────────┼───────────┼───────────────┼───────────────┤
+//    │ OSM(MOD_LSFT) │ LGUI_T(a) │ LALT_T(r) │ LCTL_T(s) │ LSFT_T(t) │  g  │   TO(_BASE)   │   │    QK_LEAD    │  m  │ LSFT_T(n) │ LCTL_T(e) │ LALT_T(i) │   LGUI_T(o)   │ OSM(MOD_LSFT) │
+//    ├───────────────┼───────────┼───────────┼───────────┼───────────┼─────┼───────────────┘   └───────────────┼─────┼───────────┼───────────┼───────────┼───────────────┼───────────────┤
+//    │ OSM(MOD_LCTL) │     z     │     x     │     c     │     d     │  v  │                                   │  k  │     h     │     ,     │     .     │ OSM(MOD_LALT) │ OSM(MOD_LCTL) │
+//    └───────────────┴───────────┴───────────┴───────────┼───────────┼─────┼───────────────┐   ┌───────────────┼─────┼───────────┼───────────┴───────────┴───────────────┴───────────────┘
+//                                                        │    esc    │ spc │  OSL(_MOVE)   │   │   OSL(_NUM)   │ ent │ bACKSPACE │
+//                                                        └───────────┴─────┴───────────────┘   └───────────────┴─────┴───────────┘
 [_BASE] = LAYOUT_split_3x6_3_ex2(
-  OSM(MOD_RALT) , KC_Q         , KC_W         , KC_F         , KC_P         , KC_B     , XXXXXXX    ,     XXXXXXX   , KC_J     , KC_L         , KC_U         , KC_Y         , KC_TAB       , KC_UP   ,
-  OSM(MOD_LSFT) , LGUI_T(KC_A) , LALT_T(KC_R) , LCTL_T(KC_S) , LSFT_T(KC_T) , KC_G     , TO(_BASE)  ,     QK_LEAD   , KC_M     , LSFT_T(KC_N) , LCTL_T(KC_E) , LALT_T(KC_I) , LGUI_T(KC_O) , KC_DOWN ,
-  OSM(MOD_LCTL) , KC_Z         , KC_X         , KC_C         , KC_D         , KC_V     ,                              KC_K     , KC_H         , KC_COMMA     , KC_DOT       , KC_LEFT      , KC_RIGHT,
-                                                               KC_ESCAPE    , KC_SPACE , OSL(_MOVE) ,     OSL(_NUM) , KC_ENTER , KC_BACKSPACE
+  OSM(MOD_LGUI) , KC_Q         , KC_W         , KC_F         , KC_P         , KC_B     , OSM(MOD_LALT) ,     OSM(MOD_RALT) , KC_J     , KC_L         , KC_U         , KC_Y         , KC_TAB        , OSM(MOD_LGUI),
+  OSM(MOD_LSFT) , LGUI_T(KC_A) , LALT_T(KC_R) , LCTL_T(KC_S) , LSFT_T(KC_T) , KC_G     , TO(_BASE)     ,     QK_LEAD       , KC_M     , LSFT_T(KC_N) , LCTL_T(KC_E) , LALT_T(KC_I) , LGUI_T(KC_O)  , OSM(MOD_LSFT),
+  OSM(MOD_LCTL) , KC_Z         , KC_X         , KC_C         , KC_D         , KC_V     ,                                     KC_K     , KC_H         , KC_COMMA     , KC_DOT       , OSM(MOD_LALT) , OSM(MOD_LCTL),
+                                                               KC_ESCAPE    , KC_SPACE , OSL(_MOVE)    ,     OSL(_NUM)     , KC_ENTER , KC_BACKSPACE
 ),
 
-//    ┌───────────────┬───────────────────┬───────────┬───────────┬───────────┬─────┬───────────┐   ┌─────────┬─────┬───────────┬───────────┬───────────┬────────────┬────┐
-//    │      no       │         \         │     7     │     8     │     9     │  0  │  QK_LLCK  │   │ QK_LLCK │ no  │    no     │    no     │    no     │     no     │ no │
-//    ├───────────────┼───────────────────┼───────────┼───────────┼───────────┼─────┼───────────┤   ├─────────┼─────┼───────────┼───────────┼───────────┼────────────┼────┤
-//    │ OSM(MOD_LSFT) │ LGUI_T(sEMICOLON) │ LALT_T(4) │ LCTL_T(5) │ LSFT_T(6) │  =  │ TO(_BASE) │   │   no    │ no  │ LSFT_T(') │ LCTL_T([) │ LALT_T(]) │ LGUI_T(no) │ no │
-//    ├───────────────┼───────────────────┼───────────┼───────────┼───────────┼─────┼───────────┘   └─────────┼─────┼───────────┼───────────┼───────────┼────────────┼────┤
-//    │ OSM(MOD_LCTL) │         /         │     1     │     2     │     3     │  -  │                         │ no  │     `     │     ,     │     .     │     no     │ no │
-//    └───────────────┴───────────────────┴───────────┴───────────┼───────────┼─────┼───────────┐   ┌─────────┼─────┼───────────┼───────────┴───────────┴────────────┴────┘
-//                                                                │    esc    │ spc │    no     │   │   no    │ ent │ bACKSPACE │
-//                                                                └───────────┴─────┴───────────┘   └─────────┴─────┴───────────┘
+//    ┌───────────────┬───────────────────┬───────────┬───────────┬───────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬───────────┬───────────┬───────────────┬───────────────┐
+//    │ OSM(MOD_LGUI) │         \         │     7     │     8     │     9     │  0  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │ no  │    no     │    no     │    no     │      no       │ OSM(MOD_LGUI) │
+//    ├───────────────┼───────────────────┼───────────┼───────────┼───────────┼─────┼───────────────┤   ├───────────────┼─────┼───────────┼───────────┼───────────┼───────────────┼───────────────┤
+//    │ OSM(MOD_LSFT) │ LGUI_T(sEMICOLON) │ LALT_T(4) │ LCTL_T(5) │ LSFT_T(6) │  =  │   TO(_BASE)   │   │    QK_LLCK    │ no  │ LSFT_T(') │ LCTL_T([) │ LALT_T(]) │  LGUI_T(no)   │ OSM(MOD_LSFT) │
+//    ├───────────────┼───────────────────┼───────────┼───────────┼───────────┼─────┼───────────────┘   └───────────────┼─────┼───────────┼───────────┼───────────┼───────────────┼───────────────┤
+//    │ OSM(MOD_LCTL) │         /         │     1     │     2     │     3     │  -  │                                   │ no  │     `     │     ,     │     .     │ OSM(MOD_LALT) │ OSM(MOD_LCTL) │
+//    └───────────────┴───────────────────┴───────────┴───────────┼───────────┼─────┼───────────────┐   ┌───────────────┼─────┼───────────┼───────────┴───────────┴───────────────┴───────────────┘
+//                                                                │    esc    │ spc │      no       │   │      no       │ ent │ bACKSPACE │
+//                                                                └───────────┴─────┴───────────────┘   └───────────────┴─────┴───────────┘
 [_NUM] = LAYOUT_split_3x6_3_ex2(
-  XXXXXXX       , KC_BACKSLASH         , KC_7         , KC_8         , KC_9         , KC_0     , QK_LLCK   ,     QK_LLCK , XXXXXXX  , XXXXXXX          , XXXXXXX         , XXXXXXX         , XXXXXXX         , XXXXXXX,
-  OSM(MOD_LSFT) , LGUI_T(KC_SEMICOLON) , LALT_T(KC_4) , LCTL_T(KC_5) , LSFT_T(KC_6) , KC_EQUAL , TO(_BASE) ,     XXXXXXX , XXXXXXX  , LSFT_T(KC_QUOTE) , LCTL_T(KC_LBRC) , LALT_T(KC_RBRC) , LGUI_T(XXXXXXX) , XXXXXXX,
-  OSM(MOD_LCTL) , KC_SLASH             , KC_1         , KC_2         , KC_3         , KC_MINUS ,                           XXXXXXX  , KC_GRAVE         , KC_COMMA        , KC_DOT          , XXXXXXX         , XXXXXXX,
-                                                                       KC_ESCAPE    , KC_SPACE , XXXXXXX   ,     XXXXXXX , KC_ENTER , KC_BACKSPACE
+  OSM(MOD_LGUI) , KC_BACKSLASH         , KC_7         , KC_8         , KC_9         , KC_0     , OSM(MOD_LALT) ,     OSM(MOD_RALT) , XXXXXXX  , XXXXXXX          , XXXXXXX         , XXXXXXX         , XXXXXXX         , OSM(MOD_LGUI),
+  OSM(MOD_LSFT) , LGUI_T(KC_SEMICOLON) , LALT_T(KC_4) , LCTL_T(KC_5) , LSFT_T(KC_6) , KC_EQUAL , TO(_BASE)     ,     QK_LLCK       , XXXXXXX  , LSFT_T(KC_QUOTE) , LCTL_T(KC_LBRC) , LALT_T(KC_RBRC) , LGUI_T(XXXXXXX) , OSM(MOD_LSFT),
+  OSM(MOD_LCTL) , KC_SLASH             , KC_1         , KC_2         , KC_3         , KC_MINUS ,                                     XXXXXXX  , KC_GRAVE         , KC_COMMA        , KC_DOT          , OSM(MOD_LALT)   , OSM(MOD_LCTL),
+                                                                       KC_ESCAPE    , KC_SPACE , XXXXXXX       ,     XXXXXXX       , KC_ENTER , KC_BACKSPACE
 ),
 
-//    ┌───────────────┬────────────┬────────────┬────────────┬────────────┬─────┬───────────┐   ┌─────────┬─────┬───────────┬─────────┬───────────┬─────────┬────┐
-//    │      no       │     no     │     no     │     no     │     no     │ no  │  QK_LLCK  │   │ QK_LLCK │ no  │   home    │ pAGE_UP │ pAGE_DOWN │   end   │ no │
-//    ├───────────────┼────────────┼────────────┼────────────┼────────────┼─────┼───────────┤   ├─────────┼─────┼───────────┼─────────┼───────────┼─────────┼────┤
-//    │ OSM(MOD_LSFT) │ LGUI_T(no) │ LALT_T(no) │ LCTL_T(no) │ LSFT_T(no) │ no  │ TO(_BASE) │   │   no    │ no  │   left    │   up    │   down    │  rght   │ no │
-//    ├───────────────┼────────────┼────────────┼────────────┼────────────┼─────┼───────────┘   └─────────┼─────┼───────────┼─────────┼───────────┼─────────┼────┤
-//    │ OSM(MOD_LCTL) │     no     │     no     │  MS_BTN3   │  MS_BTN2   │ no  │                         │ no  │  MS_LEFT  │  MS_UP  │  MS_DOWN  │ MS_RGHT │ no │
-//    └───────────────┴────────────┴────────────┴────────────┼────────────┼─────┼───────────┐   ┌─────────┼─────┼───────────┼─────────┴───────────┴─────────┴────┘
-//                                                           │    esc     │ spc │    no     │   │ MS_BTN1 │ ent │ bACKSPACE │
-//                                                           └────────────┴─────┴───────────┘   └─────────┴─────┴───────────┘
+//    ┌───────────────┬────────────┬────────────┬────────────┬────────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬─────────┬───────────┬─────────┬───────────────┐
+//    │ OSM(MOD_LGUI) │     no     │     no     │     no     │     no     │ no  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │ no  │   home    │ pAGE_UP │ pAGE_DOWN │   end   │ OSM(MOD_LGUI) │
+//    ├───────────────┼────────────┼────────────┼────────────┼────────────┼─────┼───────────────┤   ├───────────────┼─────┼───────────┼─────────┼───────────┼─────────┼───────────────┤
+//    │ OSM(MOD_LSFT) │ LGUI_T(no) │ LALT_T(no) │ LCTL_T(no) │ LSFT_T(no) │ no  │   TO(_BASE)   │   │    QK_LLCK    │ no  │   left    │   up    │   down    │  rght   │ OSM(MOD_LSFT) │
+//    ├───────────────┼────────────┼────────────┼────────────┼────────────┼─────┼───────────────┘   └───────────────┼─────┼───────────┼─────────┼───────────┼─────────┼───────────────┤
+//    │ OSM(MOD_LCTL) │     no     │     no     │  MS_BTN3   │  MS_BTN2   │ no  │                                   │ no  │  MS_LEFT  │  MS_UP  │  MS_DOWN  │ MS_RGHT │ OSM(MOD_LCTL) │
+//    └───────────────┴────────────┴────────────┴────────────┼────────────┼─────┼───────────────┐   ┌───────────────┼─────┼───────────┼─────────┴───────────┴─────────┴───────────────┘
+//                                                           │    esc     │ spc │      no       │   │    MS_BTN1    │ ent │ bACKSPACE │
+//                                                           └────────────┴─────┴───────────────┘   └───────────────┴─────┴───────────┘
 [_MOVE] = LAYOUT_split_3x6_3_ex2(
-  XXXXXXX       , XXXXXXX         , XXXXXXX         , XXXXXXX         , XXXXXXX         , XXXXXXX  , QK_LLCK   ,     QK_LLCK , XXXXXXX  , KC_HOME      , KC_PAGE_UP , KC_PAGE_DOWN , KC_END   , XXXXXXX,
-  OSM(MOD_LSFT) , LGUI_T(XXXXXXX) , LALT_T(XXXXXXX) , LCTL_T(XXXXXXX) , LSFT_T(XXXXXXX) , XXXXXXX  , TO(_BASE) ,     XXXXXXX , XXXXXXX  , KC_LEFT      , KC_UP      , KC_DOWN      , KC_RIGHT , XXXXXXX,
-  OSM(MOD_LCTL) , XXXXXXX         , XXXXXXX         , MS_BTN3         , MS_BTN2         , XXXXXXX  ,                           XXXXXXX  , MS_LEFT      , MS_UP      , MS_DOWN      , MS_RGHT  , XXXXXXX,
-                                                                        KC_ESCAPE       , KC_SPACE , XXXXXXX   ,     MS_BTN1 , KC_ENTER , KC_BACKSPACE
+  OSM(MOD_LGUI) , XXXXXXX         , XXXXXXX         , XXXXXXX         , XXXXXXX         , XXXXXXX  , OSM(MOD_LALT) ,     OSM(MOD_RALT) , XXXXXXX  , KC_HOME      , KC_PAGE_UP , KC_PAGE_DOWN , KC_END   , OSM(MOD_LGUI),
+  OSM(MOD_LSFT) , LGUI_T(XXXXXXX) , LALT_T(XXXXXXX) , LCTL_T(XXXXXXX) , LSFT_T(XXXXXXX) , XXXXXXX  , TO(_BASE)     ,     QK_LLCK       , XXXXXXX  , KC_LEFT      , KC_UP      , KC_DOWN      , KC_RIGHT , OSM(MOD_LSFT),
+  OSM(MOD_LCTL) , XXXXXXX         , XXXXXXX         , MS_BTN3         , MS_BTN2         , XXXXXXX  ,                                     XXXXXXX  , MS_LEFT      , MS_UP      , MS_DOWN      , MS_RGHT  , OSM(MOD_LCTL),
+                                                                        KC_ESCAPE       , KC_SPACE , XXXXXXX       ,     MS_BTN1       , KC_ENTER , KC_BACKSPACE
 )
 };
 
@@ -93,6 +103,7 @@ void leader_start_user(void) {
 };
 
 /* Leader sequences allow for vim-like command sequences
+ * https://docs.qmk.fm/features/leader_key
  */
 void leader_end_user(void) {
     // noop
@@ -116,6 +127,7 @@ void leader_end_user(void) {
 // TODO: characters should be blue, but with shift,etc modifiers cyan.
 // TODO: digits should be dark green, but with shift,etc lightgreen.
 // TODO: not rbg, but hues, then change intensity!
+// https://github.com/qmk/qmk_firmware/blob/a573931fef26427e761456698de83e58458df17c/quantum/keycodes.h
 void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8_t mods, uint8_t index, uint16_t keycode) {
     uint8_t basekey = QK_MODS_GET_BASIC_KEYCODE(keycode);
     //uint16_t modbits = keycode & (MOD_BIT(KC_LGUI | KC_LALT | KC_LCTL | KC_LSFT));
@@ -196,22 +208,6 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             };
         };
     };
-    /*
-    if (get_highest_layer(layer_state) > 0) {
-        uint8_t layer = get_highest_layer(layer_state);
-
-        for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
-            for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
-                uint8_t index = g_led_config.matrix_co[row][col];
-
-                if (index >= led_min && index < led_max && index != NO_LED &&
-                keymap_key_to_keycode(layer, (keypos_t){col,row}) > KC_TRNS) {
-                    rgb_matrix_set_color(index, RGB_GREEN);
-                }
-            }
-        }
-    }
-    */
     // nothing to be done
     return false;
 }
