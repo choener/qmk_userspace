@@ -122,73 +122,110 @@ void leader_end_user(void) {
     };
 };
 
+
 /*
  */
 // TODO: characters should be blue, but with shift,etc modifiers cyan.
 // TODO: digits should be dark green, but with shift,etc lightgreen.
 // TODO: not rbg, but hues, then change intensity!
 // https://github.com/qmk/qmk_firmware/blob/a573931fef26427e761456698de83e58458df17c/quantum/keycodes.h
-void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8_t mods, uint8_t index, uint16_t keycode) {
+void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8_t mods, uint8_t index, uint8_t row, uint8_t col, uint16_t keycode) {
     uint8_t basekey = QK_MODS_GET_BASIC_KEYCODE(keycode);
+    // BUG: This should be 8bit?
+    uint16_t osm = get_oneshot_mods ();
+    uint16_t mds = get_mods();
+    hsv_t hsv = {0, 0, 0};
     //uint16_t modbits = keycode & (MOD_BIT(KC_LGUI | KC_LALT | KC_LCTL | KC_LSFT));
     //always set color to off first
+    //TODO: New system: use hsv, dim led's, too. Then brighten up some
     if (keycode > XXXXXXX) {
-        rgb_matrix_set_color(index, RGB_WHITE);
+        hsv = (hsv_t) {HSV_WHITE}; //white
     } else {
-        rgb_matrix_set_color(index, RGB_OFF);
+        hsv = (hsv_t) {HSV_OFF};
     };
 
     // "unmodified" characters keys (i.e no layer switch or anything fancy)
     if (basekey >= KC_A && basekey <= KC_Z) {
         if (keycode & 0xFF00) {
-            rgb_matrix_set_color(index, RGB_CYAN);
+            hsv = (hsv_t) {HSV_CYAN};
         } else
         {
-            rgb_matrix_set_color(index, RGB_BLUE);
+            hsv = (hsv_t) {HSV_BLUE};
         };
     };
 
     // digits and others
     if (basekey >= KC_1 && basekey <= KC_0) {
         if (keycode & 0xFF00) {
-            rgb_matrix_set_color(index, RGB_SPRINGGREEN);
+            hsv = (hsv_t) {HSV_SPRINGGREEN};
         } else {
-            rgb_matrix_set_color(index, RGB_GREEN);
+            hsv = (hsv_t) {HSV_GREEN};
         };
     };
 
     // punctuation, brackets, etc
     if (basekey >= KC_MINUS && basekey <= KC_SLASH) {
         if (keycode & 0xFF00) {
-            rgb_matrix_set_color(index, RGB_GOLD);
+            hsv = (hsv_t) {HSV_GOLD};
         } else {
-            rgb_matrix_set_color(index, RGB_YELLOW);
+            hsv = (hsv_t) {HSV_YELLOW};
         };
     };
 
     // movements
     if (basekey >= KC_RIGHT && basekey <= KC_UP) {
         if (keycode & 0xFF00) {
-            rgb_matrix_set_color(index, RGB_CYAN);
+            hsv = (hsv_t) {HSV_CYAN};
         } else {
-            rgb_matrix_set_color(index, RGB_TURQUOISE);
+            hsv = (hsv_t) {HSV_TURQUOISE};
         };
     };
 
-    if (keycode == QK_LLCK && (is_layer_locked(_NUM) || is_layer_locked(_MOVE))) {
-            rgb_matrix_set_color(index, RGB_RED);
-    };
     // TODO: on layer lock, color the appropriate layer key red
     // BUG: only the key on the master side turns red?
 
     // once leader is active, I should also switch other keys off and only bound keys on
     if (keycode == QK_LEAD) {
         if (leader_sequence_active()) {
-            rgb_matrix_set_color(index, RGB_CORAL);
+            hsv = (hsv_t) {HSV_CORAL};
         } else {
-            rgb_matrix_set_color(index, RGB_RED);
+            hsv = (hsv_t) {HSV_RED};
         };
     };
+
+    hsv.v = MIN(hsv.v, 100);
+
+    // layer information
+    if (keycode == OSL(_MOVE)) {
+        hsv = (hsv_t) {HSV_GREEN};
+        hsv.v = 50;
+        if (is_layer_locked(_MOVE)) {
+            hsv.v = 250;
+        };
+    };
+    if (keycode == OSL(_NUM)) {
+        hsv = (hsv_t) {HSV_GREEN};
+        hsv.v = 50;
+        if (is_layer_locked(_NUM)) {
+            hsv.v = 250;
+        };
+    };
+
+    // the 4 modifier keys
+    for (uint16_t k = KC_LEFT_CTRL; k <= KC_LEFT_GUI; k++) {
+        // m = 0..3, which is the bit to be interested in.
+        uint8_t m = k - KC_LEFT_CTRL;
+        if (keycode == OSM(1<<m)) {
+            hsv = (hsv_t) {HSV_GREEN};
+            hsv.v = 50;
+            if ((mds | osm) & MOD_BIT(k)) {
+                hsv.v = 250;
+            };
+        };
+    };
+
+    rgb_t rgb = hsv_to_rgb(hsv);
+    rgb_matrix_set_color(index, rgb.r, rgb.g, rgb.b);
 
 };
 
@@ -204,7 +241,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             uint8_t index = g_led_config.matrix_co[row][col];
             uint16_t keycode = keymap_key_to_keycode(layer, (keypos_t){col,row});
             if (index >= led_min && index < led_max && index != NO_LED) {
-                rgb_matrix_per_index(led_min, led_max, layer, mods, index, keycode);
+                rgb_matrix_per_index(led_min, led_max, layer, mods, index, row, col, keycode);
             };
         };
     };
@@ -217,4 +254,15 @@ void keyboard_post_init_user(void) {
     rgb_matrix_sethsv_noeeprom(HSV_OFF);
 }
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case TO(_BASE):
+            // we handle to->base special. It first disables all one-shot modifiers, then (via return true) still returns us to the base layer.
+            reset_oneshot_layer();
+            clear_oneshot_mods();
+            return true;
+        default:
+            return true;
+    };
+};
 
