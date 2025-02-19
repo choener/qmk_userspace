@@ -46,6 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * If a hold-key is down, while another key is pressed and released, count as held.
  * If the hold-key is instead released before the other key, then handle as two key press events, without the hold event at all
  */
+// TODO: it looks like I quite often accidentally trigger the permissive hold rollover to another key, either opening tabs or switching windows. Consider removing the home row mods or reducing the rollover behaviour. Maybe the held key needs to be held longer before counting as held?
 #define PERMISSIVE_HOLD
 
 #ifdef RGBLIGHT_ENABLE

@@ -35,46 +35,47 @@ enum layers {
 // TODO: Consider better handling / moving of tab-hold keys
 // TODO: Consider freezing all modifiers with qk-lead freeze key?
 // TODO: single tap (, double tap [, triple tap {
+// TODO: Remove the home-row _T mods, except for shift? Then maybe consider moving the OSM(mod_shift) one to the "Alt" position, since we won't need them so often?
 
 /*
  * https://docs.qmk.fm/mod_tap
  */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-//    ┌───────────────┬───────────┬───────────┬───────────┬───────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬───────────┬───────────┬───────────────┬───────────────┐
-//    │ OSM(MOD_LGUI) │     q     │     w     │     f     │     p     │  b  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │  j  │     l     │     u     │     y     │      tab      │ OSM(MOD_LGUI) │
-//    ├───────────────┼───────────┼───────────┼───────────┼───────────┼─────┼───────────────┤   ├───────────────┼─────┼───────────┼───────────┼───────────┼───────────────┼───────────────┤
-//    │ OSM(MOD_LSFT) │ LGUI_T(a) │ LALT_T(r) │ LCTL_T(s) │ LSFT_T(t) │  g  │   TO(_BASE)   │   │    QK_LEAD    │  m  │ LSFT_T(n) │ LCTL_T(e) │ LALT_T(i) │   LGUI_T(o)   │ OSM(MOD_LSFT) │
-//    ├───────────────┼───────────┼───────────┼───────────┼───────────┼─────┼───────────────┘   └───────────────┼─────┼───────────┼───────────┼───────────┼───────────────┼───────────────┤
-//    │ OSM(MOD_LCTL) │     z     │     x     │     c     │     d     │  v  │                                   │  k  │     h     │     ,     │     .     │ OSM(MOD_LALT) │ OSM(MOD_LCTL) │
-//    └───────────────┴───────────┴───────────┴───────────┼───────────┼─────┼───────────────┐   ┌───────────────┼─────┼───────────┼───────────┴───────────┴───────────────┴───────────────┘
-//                                                        │    esc    │ spc │  OSL(_MOVE)   │   │   OSL(_NUM)   │ ent │ bACKSPACE │
-//                                                        └───────────┴─────┴───────────────┘   └───────────────┴─────┴───────────┘
+//    ┌───────────────┬───┬───┬───┬───────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬───┬───┬───────────────┬───────────────┐
+//    │ OSM(MOD_LGUI) │ q │ w │ f │     p     │  b  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │  j  │     l     │ u │ y │      tab      │ OSM(MOD_LGUI) │
+//    ├───────────────┼───┼───┼───┼───────────┼─────┼───────────────┤   ├───────────────┼─────┼───────────┼───┼───┼───────────────┼───────────────┤
+//    │ OSM(MOD_LSFT) │ a │ r │ s │ LSFT_T(t) │  g  │   TO(_BASE)   │   │    QK_LEAD    │  m  │ LSFT_T(n) │ e │ i │       o       │ OSM(MOD_LSFT) │
+//    ├───────────────┼───┼───┼───┼───────────┼─────┼───────────────┘   └───────────────┼─────┼───────────┼───┼───┼───────────────┼───────────────┤
+//    │ OSM(MOD_LCTL) │ z │ x │ c │     d     │  v  │                                   │  k  │     h     │ , │ . │ OSM(MOD_LALT) │ OSM(MOD_LCTL) │
+//    └───────────────┴───┴───┴───┼───────────┼─────┼───────────────┐   ┌───────────────┼─────┼───────────┼───┴───┴───────────────┴───────────────┘
+//                                │    esc    │ spc │  OSL(_MOVE)   │   │   OSL(_NUM)   │ ent │ bACKSPACE │
+//                                └───────────┴─────┴───────────────┘   └───────────────┴─────┴───────────┘
 [_BASE] = LAYOUT_split_3x6_3_ex2(
-  OSM(MOD_LGUI) , KC_Q         , KC_W         , KC_F         , KC_P         , KC_B     , OSM(MOD_LALT) ,     OSM(MOD_RALT) , KC_J     , KC_L         , KC_U         , KC_Y         , KC_TAB        , OSM(MOD_LGUI),
-  OSM(MOD_LSFT) , LGUI_T(KC_A) , LALT_T(KC_R) , LCTL_T(KC_S) , LSFT_T(KC_T) , KC_G     , TO(_BASE)     ,     QK_LEAD       , KC_M     , LSFT_T(KC_N) , LCTL_T(KC_E) , LALT_T(KC_I) , LGUI_T(KC_O)  , OSM(MOD_LSFT),
-  OSM(MOD_LCTL) , KC_Z         , KC_X         , KC_C         , KC_D         , KC_V     ,                                     KC_K     , KC_H         , KC_COMMA     , KC_DOT       , OSM(MOD_LALT) , OSM(MOD_LCTL),
-                                                               KC_ESCAPE    , KC_SPACE , OSL(_MOVE)    ,     OSL(_NUM)     , KC_ENTER , KC_BACKSPACE
+  OSM(MOD_LGUI) , KC_Q , KC_W , KC_F , KC_P         , KC_B     , OSM(MOD_LALT) ,     OSM(MOD_RALT) , KC_J     , KC_L         , KC_U     , KC_Y   , KC_TAB        , OSM(MOD_LGUI),
+  OSM(MOD_LSFT) , KC_A , KC_R , KC_S , LSFT_T(KC_T) , KC_G     , TO(_BASE)     ,     QK_LEAD       , KC_M     , LSFT_T(KC_N) , KC_E     , KC_I   , KC_O          , OSM(MOD_LSFT),
+  OSM(MOD_LCTL) , KC_Z , KC_X , KC_C , KC_D         , KC_V     ,                                     KC_K     , KC_H         , KC_COMMA , KC_DOT , OSM(MOD_LALT) , OSM(MOD_LCTL),
+                                       KC_ESCAPE    , KC_SPACE , OSL(_MOVE)    ,     OSL(_NUM)     , KC_ENTER , KC_BACKSPACE
 ),
 
-//    ┌───────────────┬───────────────────┬───────────┬───────────┬───────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬───────────┬───────────┬───────────────┬───────────────┐
-//    │ OSM(MOD_LGUI) │         \         │     7     │     8     │     9     │  0  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │ no  │    no     │    no     │    no     │      no       │ OSM(MOD_LGUI) │
-//    ├───────────────┼───────────────────┼───────────┼───────────┼───────────┼─────┼───────────────┤   ├───────────────┼─────┼───────────┼───────────┼───────────┼───────────────┼───────────────┤
-//    │ OSM(MOD_LSFT) │ LGUI_T(sEMICOLON) │ LALT_T(4) │ LCTL_T(5) │ LSFT_T(6) │  =  │   TO(_BASE)   │   │    QK_LLCK    │ no  │ LSFT_T(') │ LCTL_T([) │ LALT_T(]) │  LGUI_T(no)   │ OSM(MOD_LSFT) │
-//    ├───────────────┼───────────────────┼───────────┼───────────┼───────────┼─────┼───────────────┘   └───────────────┼─────┼───────────┼───────────┼───────────┼───────────────┼───────────────┤
-//    │ OSM(MOD_LCTL) │         /         │     1     │     2     │     3     │  -  │                                   │ no  │     `     │     ,     │     .     │ OSM(MOD_LALT) │ OSM(MOD_LCTL) │
-//    └───────────────┴───────────────────┴───────────┴───────────┼───────────┼─────┼───────────────┐   ┌───────────────┼─────┼───────────┼───────────┴───────────┴───────────────┴───────────────┘
-//                                                                │    esc    │ spc │      no       │   │      no       │ ent │ bACKSPACE │
-//                                                                └───────────┴─────┴───────────────┘   └───────────────┴─────┴───────────┘
+//    ┌───────────────┬───────────┬───┬───┬───────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬────┬────┬───────────────┬───────────────┐
+//    │ OSM(MOD_LGUI) │     \     │ 7 │ 8 │     9     │  0  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │ no  │    no     │ no │ no │      no       │ OSM(MOD_LGUI) │
+//    ├───────────────┼───────────┼───┼───┼───────────┼─────┼───────────────┤   ├───────────────┼─────┼───────────┼────┼────┼───────────────┼───────────────┤
+//    │ OSM(MOD_LSFT) │ sEMICOLON │ 4 │ 5 │ LSFT_T(6) │  =  │   TO(_BASE)   │   │    QK_LLCK    │ no  │ LSFT_T(') │ [  │ ]  │      no       │ OSM(MOD_LSFT) │
+//    ├───────────────┼───────────┼───┼───┼───────────┼─────┼───────────────┘   └───────────────┼─────┼───────────┼────┼────┼───────────────┼───────────────┤
+//    │ OSM(MOD_LCTL) │     /     │ 1 │ 2 │     3     │  -  │                                   │ no  │     `     │ ,  │ .  │ OSM(MOD_LALT) │ OSM(MOD_LCTL) │
+//    └───────────────┴───────────┴───┴───┼───────────┼─────┼───────────────┐   ┌───────────────┼─────┼───────────┼────┴────┴───────────────┴───────────────┘
+//                                        │    esc    │ spc │      no       │   │      no       │ ent │ bACKSPACE │
+//                                        └───────────┴─────┴───────────────┘   └───────────────┴─────┴───────────┘
 [_NUM] = LAYOUT_split_3x6_3_ex2(
-  OSM(MOD_LGUI) , KC_BACKSLASH         , KC_7         , KC_8         , KC_9         , KC_0     , OSM(MOD_LALT) ,     OSM(MOD_RALT) , XXXXXXX  , XXXXXXX          , XXXXXXX         , XXXXXXX         , XXXXXXX         , OSM(MOD_LGUI),
-  OSM(MOD_LSFT) , LGUI_T(KC_SEMICOLON) , LALT_T(KC_4) , LCTL_T(KC_5) , LSFT_T(KC_6) , KC_EQUAL , TO(_BASE)     ,     QK_LLCK       , XXXXXXX  , LSFT_T(KC_QUOTE) , LCTL_T(KC_LBRC) , LALT_T(KC_RBRC) , LGUI_T(XXXXXXX) , OSM(MOD_LSFT),
-  OSM(MOD_LCTL) , KC_SLASH             , KC_1         , KC_2         , KC_3         , KC_MINUS ,                                     XXXXXXX  , KC_GRAVE         , KC_COMMA        , KC_DOT          , OSM(MOD_LALT)   , OSM(MOD_LCTL),
-                                                                       KC_ESCAPE    , KC_SPACE , XXXXXXX       ,     XXXXXXX       , KC_ENTER , KC_BACKSPACE
+  OSM(MOD_LGUI) , KC_BACKSLASH , KC_7 , KC_8 , KC_9         , KC_0     , OSM(MOD_LALT) ,     OSM(MOD_RALT) , XXXXXXX  , XXXXXXX          , XXXXXXX  , XXXXXXX , XXXXXXX       , OSM(MOD_LGUI),
+  OSM(MOD_LSFT) , KC_SEMICOLON , KC_4 , KC_5 , LSFT_T(KC_6) , KC_EQUAL , TO(_BASE)     ,     QK_LLCK       , XXXXXXX  , LSFT_T(KC_QUOTE) , KC_LBRC  , KC_RBRC , XXXXXXX       , OSM(MOD_LSFT),
+  OSM(MOD_LCTL) , KC_SLASH     , KC_1 , KC_2 , KC_3         , KC_MINUS ,                                     XXXXXXX  , KC_GRAVE         , KC_COMMA , KC_DOT  , OSM(MOD_LALT) , OSM(MOD_LCTL),
+                                               KC_ESCAPE    , KC_SPACE , XXXXXXX       ,     XXXXXXX       , KC_ENTER , KC_BACKSPACE
 ),
 
 //    ┌───────────────┬────────────┬────────────┬────────────┬────────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬─────────┬───────────┬─────────┬───────────────┐
-//    │ OSM(MOD_LGUI) │     no     │     no     │     no     │     no     │ no  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │ no  │   home    │ pAGE_UP │ pAGE_DOWN │   end   │ OSM(MOD_LGUI) │
+//    │ OSM(MOD_LGUI) │     f1     │     f7     │     no     │     no     │ no  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │ no  │   home    │ pAGE_UP │ pAGE_DOWN │   end   │ OSM(MOD_LGUI) │
 //    ├───────────────┼────────────┼────────────┼────────────┼────────────┼─────┼───────────────┤   ├───────────────┼─────┼───────────┼─────────┼───────────┼─────────┼───────────────┤
 //    │ OSM(MOD_LSFT) │ LGUI_T(no) │ LALT_T(no) │ LCTL_T(no) │ LSFT_T(no) │ no  │   TO(_BASE)   │   │    QK_LLCK    │ no  │   left    │   up    │   down    │  rght   │ OSM(MOD_LSFT) │
 //    ├───────────────┼────────────┼────────────┼────────────┼────────────┼─────┼───────────────┘   └───────────────┼─────┼───────────┼─────────┼───────────┼─────────┼───────────────┤
@@ -83,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                                                           │    esc     │ spc │      no       │   │    MS_BTN1    │ ent │ bACKSPACE │
 //                                                           └────────────┴─────┴───────────────┘   └───────────────┴─────┴───────────┘
 [_MOVE] = LAYOUT_split_3x6_3_ex2(
-  OSM(MOD_LGUI) , XXXXXXX         , XXXXXXX         , XXXXXXX         , XXXXXXX         , XXXXXXX  , OSM(MOD_LALT) ,     OSM(MOD_RALT) , XXXXXXX  , KC_HOME      , KC_PAGE_UP , KC_PAGE_DOWN , KC_END   , OSM(MOD_LGUI),
+  OSM(MOD_LGUI) , KC_F1           , KC_F7           , XXXXXXX         , XXXXXXX         , XXXXXXX  , OSM(MOD_LALT) ,     OSM(MOD_RALT) , XXXXXXX  , KC_HOME      , KC_PAGE_UP , KC_PAGE_DOWN , KC_END   , OSM(MOD_LGUI),
   OSM(MOD_LSFT) , LGUI_T(XXXXXXX) , LALT_T(XXXXXXX) , LCTL_T(XXXXXXX) , LSFT_T(XXXXXXX) , XXXXXXX  , TO(_BASE)     ,     QK_LLCK       , XXXXXXX  , KC_LEFT      , KC_UP      , KC_DOWN      , KC_RIGHT , OSM(MOD_LSFT),
   OSM(MOD_LCTL) , XXXXXXX         , XXXXXXX         , MS_BTN3         , MS_BTN2         , XXXXXXX  ,                                     XXXXXXX  , MS_LEFT      , MS_UP      , MS_DOWN      , MS_RGHT  , OSM(MOD_LCTL),
                                                                         KC_ESCAPE       , KC_SPACE , XXXXXXX       ,     MS_BTN1       , KC_ENTER , KC_BACKSPACE
@@ -130,55 +131,36 @@ void leader_end_user(void) {
 // TODO: not rbg, but hues, then change intensity!
 // https://github.com/qmk/qmk_firmware/blob/a573931fef26427e761456698de83e58458df17c/quantum/keycodes.h
 void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8_t mods, uint8_t index, uint8_t row, uint8_t col, uint16_t keycode) {
-    uint8_t basekey = QK_MODS_GET_BASIC_KEYCODE(keycode);
+    //uint8_t basekey = QK_MODS_GET_BASIC_KEYCODE(keycode);
     // BUG: This should be 8bit?
     uint16_t osm = get_oneshot_mods ();
     uint16_t mds = get_mods();
     hsv_t hsv = {0, 0, 0};
-    //uint16_t modbits = keycode & (MOD_BIT(KC_LGUI | KC_LALT | KC_LCTL | KC_LSFT));
-    //always set color to off first
-    //TODO: New system: use hsv, dim led's, too. Then brighten up some
-    if (keycode > XXXXXXX) {
-        hsv = (hsv_t) {HSV_WHITE}; //white
-    } else {
-        hsv = (hsv_t) {HSV_OFF};
-    };
-
-    // "unmodified" characters keys (i.e no layer switch or anything fancy)
-    if (basekey >= KC_A && basekey <= KC_Z) {
-        if (keycode & 0xFF00) {
-            hsv = (hsv_t) {HSV_CYAN};
-        } else
-        {
-            hsv = (hsv_t) {HSV_BLUE};
-        };
-    };
-
-    // digits and others
-    if (basekey >= KC_1 && basekey <= KC_0) {
-        if (keycode & 0xFF00) {
-            hsv = (hsv_t) {HSV_SPRINGGREEN};
-        } else {
-            hsv = (hsv_t) {HSV_GREEN};
-        };
-    };
-
-    // punctuation, brackets, etc
-    if (basekey >= KC_MINUS && basekey <= KC_SLASH) {
-        if (keycode & 0xFF00) {
-            hsv = (hsv_t) {HSV_GOLD};
-        } else {
-            hsv = (hsv_t) {HSV_YELLOW};
-        };
-    };
-
 
     // TODO: on layer lock, color the appropriate layer key red
     // BUG: only the key on the master side turns red?
 
-    hsv.v = MIN(hsv.v, 100);
-
     switch(keycode) {
+        // normal keys
+        case KC_A ... KC_Z:
+            hsv = (hsv_t) {HSV_BLUE};
+            hsv.v = 100;
+            break;
+        case LSFT_T(KC_A) ... LSFT_T(KC_Z):
+        case LSFT_T(KC_1) ... LSFT_T(KC_0):
+        case LSFT_T(KC_MINUS) ... LSFT_T(KC_SLASH):
+            hsv = (hsv_t) {HSV_GREEN};
+            hsv.v = 100;
+            break;
+        // digits
+        case KC_1 ... KC_0:
+            hsv = (hsv_t) {HSV_BLUE};
+            hsv.v = 100;
+            break;
+        case KC_MINUS ... KC_SLASH:
+            hsv = (hsv_t) {HSV_YELLOW};
+            hsv.v = 100;
+            break;
         // movements
         case KC_LEFT:
         case KC_UP:
@@ -190,8 +172,8 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
         // main thumb keys
         case KC_ENTER:
         case KC_SPACE:
-            hsv = (hsv_t) {HSV_PINK};
-            hsv.v = 120;
+            hsv = (hsv_t) {HSV_CYAN};
+            hsv.v = 150;
             break;
         // BUG: Probably won't work for shift-thumb since that is done via key-mod
         case KC_TAB:
@@ -207,40 +189,24 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
             hsv = (hsv_t) {HSV_ORANGE};
             hsv.v = 100;
             break;
+        case QK_LEAD:
+            hsv = (hsv_t) {HSV_MAGENTA};
+            hsv.v = 100;
+            break;
+        default:
+            if (keycode > XXXXXXX) {
+                hsv = (hsv_t) {HSV_WHITE};
+                hsv.v = 50;
+            };
     };
 
     // TODO: if oneshot layers (but only those) are on: color heart in red to indicate the way back
     // TODO: Color alt-gr
 
-    if (leader_sequence_active()) {
-        //BUG: leader_sequence_active is *not* transferred to slave side of keyboard?
-        // disable all LEDs
-        hsv.v = 0;
-        // enable active ones.
-        // TODO: Can I color code? And can I change color based on the number of entered keys?
-        switch (keycode) {
-            case KC_Q:
-            case KC_B:
-                hsv = (hsv_t) {HSV_RED};
-                break;
-            case KC_ESCAPE:
-                hsv = (hsv_t) {HSV_RED};
-                hsv.v = 250;
-                break;
-        };
-    };
-    if (keycode == QK_LEAD) {
-        hsv = (hsv_t) {HSV_MAGENTA};
-        hsv.v = 50;
-        if (leader_sequence_active()) {
-            hsv.v = 250;
-        };
-    };
-
     // layer information: _MOVE
     if (keycode == OSL(_MOVE)) {
         hsv = (hsv_t) {HSV_MAGENTA};
-        hsv.v = 50;
+        hsv.v = 100;
     };
     if (row == 3 && col == 5 && is_layer_locked(_MOVE)) {
         hsv = (hsv_t) {HSV_MAGENTA};
@@ -249,7 +215,7 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
     // layer information: _NUM
     if (keycode == OSL(_NUM)) {
         hsv = (hsv_t) {HSV_MAGENTA};
-        hsv.v = 50;
+        hsv.v = 100;
     };
     if (row == 7 && col == 5 && is_layer_locked(_NUM)) {
         hsv = (hsv_t) {HSV_MAGENTA};
@@ -273,6 +239,30 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
             };
         };
     };
+
+    // leader sequence stuff. Will override everything else
+    if (leader_sequence_active()) {
+        //BUG: leader_sequence_active is *not* transferred to slave side of keyboard?
+        // disable all LEDs
+        hsv.v = 0;
+        // enable active ones.
+        // TODO: Can I color code? And can I change color based on the number of entered keys?
+        switch (keycode) {
+            case KC_Q:
+            case KC_B:
+                hsv = (hsv_t) {HSV_RED};
+                break;
+            case KC_ESCAPE:
+                hsv = (hsv_t) {HSV_RED};
+                hsv.v = 250;
+                break;
+            case QK_LEAD:
+                //maybe make it pulse? :-D
+                hsv = (hsv_t) {HSV_MAGENTA};
+                hsv.v = 250;
+        };
+    };
+
 
     rgb_t rgb = hsv_to_rgb(hsv);
     rgb_matrix_set_color(index, rgb.r, rgb.g, rgb.b);
