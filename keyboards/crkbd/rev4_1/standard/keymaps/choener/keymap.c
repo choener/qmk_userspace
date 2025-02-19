@@ -106,7 +106,7 @@ void leader_start_user(void) {
  * https://docs.qmk.fm/features/leader_key
  */
 void leader_end_user(void) {
-    // noop
+    // noop or abort
     if (leader_sequence_one_key(KC_ESCAPE)) {
     };
     // reboot into bootloader
@@ -172,43 +172,93 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
         };
     };
 
-    // movements
-    if (basekey >= KC_RIGHT && basekey <= KC_UP) {
-        if (keycode & 0xFF00) {
-            hsv = (hsv_t) {HSV_CYAN};
-        } else {
-            hsv = (hsv_t) {HSV_TURQUOISE};
-        };
-    };
 
     // TODO: on layer lock, color the appropriate layer key red
     // BUG: only the key on the master side turns red?
 
-    // once leader is active, I should also switch other keys off and only bound keys on
-    if (keycode == QK_LEAD) {
-        if (leader_sequence_active()) {
-            hsv = (hsv_t) {HSV_CORAL};
-        } else {
-            hsv = (hsv_t) {HSV_RED};
-        };
-    };
-
     hsv.v = MIN(hsv.v, 100);
 
-    // layer information
-    if (keycode == OSL(_MOVE)) {
-        hsv = (hsv_t) {HSV_GREEN};
+    switch(keycode) {
+        // movements
+        case KC_LEFT:
+        case KC_UP:
+        case KC_DOWN:
+        case KC_RIGHT:
+            hsv = (hsv_t) {HSV_CYAN};
+            hsv.v = 100;
+            break;
+        // main thumb keys
+        case KC_ENTER:
+        case KC_SPACE:
+            hsv = (hsv_t) {HSV_PINK};
+            hsv.v = 120;
+            break;
+        // BUG: Probably won't work for shift-thumb since that is done via key-mod
+        case KC_TAB:
+            hsv = (hsv_t) {HSV_PURPLE};
+            hsv.v = 100;
+            break;
+        case KC_BACKSPACE:
+        case KC_ESCAPE:
+            hsv = (hsv_t) {HSV_ORANGE};
+            hsv.v = 120;
+            break;
+        case KC_DEL:
+            hsv = (hsv_t) {HSV_ORANGE};
+            hsv.v = 100;
+            break;
+    };
+
+    // TODO: if oneshot layers (but only those) are on: color heart in red to indicate the way back
+    // TODO: Color alt-gr
+
+    if (leader_sequence_active()) {
+        //BUG: leader_sequence_active is *not* transferred to slave side of keyboard?
+        // disable all LEDs
+        hsv.v = 0;
+        // enable active ones.
+        // TODO: Can I color code? And can I change color based on the number of entered keys?
+        switch (keycode) {
+            case KC_Q:
+            case KC_B:
+                hsv = (hsv_t) {HSV_RED};
+                break;
+            case KC_ESCAPE:
+                hsv = (hsv_t) {HSV_RED};
+                hsv.v = 250;
+                break;
+        };
+    };
+    if (keycode == QK_LEAD) {
+        hsv = (hsv_t) {HSV_MAGENTA};
         hsv.v = 50;
-        if (is_layer_locked(_MOVE)) {
+        if (leader_sequence_active()) {
             hsv.v = 250;
         };
     };
-    if (keycode == OSL(_NUM)) {
-        hsv = (hsv_t) {HSV_GREEN};
+
+    // layer information: _MOVE
+    if (keycode == OSL(_MOVE)) {
+        hsv = (hsv_t) {HSV_MAGENTA};
         hsv.v = 50;
-        if (is_layer_locked(_NUM)) {
-            hsv.v = 250;
-        };
+    };
+    if (row == 3 && col == 5 && is_layer_locked(_MOVE)) {
+        hsv = (hsv_t) {HSV_MAGENTA};
+        hsv.v = 250;
+    };
+    // layer information: _NUM
+    if (keycode == OSL(_NUM)) {
+        hsv = (hsv_t) {HSV_MAGENTA};
+        hsv.v = 50;
+    };
+    if (row == 7 && col == 5 && is_layer_locked(_NUM)) {
+        hsv = (hsv_t) {HSV_MAGENTA};
+        hsv.v = 250;
+    };
+    // lock layer
+    if (keycode == QK_LLCK) {
+        hsv = (hsv_t) {HSV_MAGENTA};
+        hsv.v = 250;
     };
 
     // the 4 modifier keys
