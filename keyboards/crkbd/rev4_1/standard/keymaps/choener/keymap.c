@@ -74,29 +74,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                KC_ESCAPE    , KC_SPACE , XXXXXXX       ,     XXXXXXX       , KC_ENTER , KC_BACKSPACE
 ),
 
-//    ┌───────────────┬────────────┬────────────┬────────────┬────────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬─────────┬───────────┬─────────┬───────────────┐
-//    │ OSM(MOD_LGUI) │     f1     │     f7     │     no     │     no     │ no  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │ no  │   home    │ pAGE_UP │ pAGE_DOWN │   end   │ OSM(MOD_LGUI) │
-//    ├───────────────┼────────────┼────────────┼────────────┼────────────┼─────┼───────────────┤   ├───────────────┼─────┼───────────┼─────────┼───────────┼─────────┼───────────────┤
-//    │ OSM(MOD_LSFT) │ LGUI_T(no) │ LALT_T(no) │ LCTL_T(no) │ LSFT_T(no) │ no  │   TO(_BASE)   │   │    QK_LLCK    │ no  │   left    │   up    │   down    │  rght   │ OSM(MOD_LSFT) │
-//    ├───────────────┼────────────┼────────────┼────────────┼────────────┼─────┼───────────────┘   └───────────────┼─────┼───────────┼─────────┼───────────┼─────────┼───────────────┤
-//    │ OSM(MOD_LCTL) │     no     │     no     │  MS_BTN3   │  MS_BTN2   │ no  │                                   │ no  │  MS_LEFT  │  MS_UP  │  MS_DOWN  │ MS_RGHT │ OSM(MOD_LCTL) │
-//    └───────────────┴────────────┴────────────┴────────────┼────────────┼─────┼───────────────┐   ┌───────────────┼─────┼───────────┼─────────┴───────────┴─────────┴───────────────┘
-//                                                           │    esc     │ spc │      no       │   │    MS_BTN1    │ ent │ bACKSPACE │
-//                                                           └────────────┴─────┴───────────────┘   └───────────────┴─────┴───────────┘
+//    ┌───────────────┬────┬────┬─────────┬────────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬─────────┬───────────┬─────────┬───────────────┐
+//    │ OSM(MOD_LGUI) │ f1 │ f7 │   no    │     no     │ no  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │ no  │   home    │ pAGE_UP │ pAGE_DOWN │   end   │ OSM(MOD_LGUI) │
+//    ├───────────────┼────┼────┼─────────┼────────────┼─────┼───────────────┤   ├───────────────┼─────┼───────────┼─────────┼───────────┼─────────┼───────────────┤
+//    │ OSM(MOD_LSFT) │ no │ no │   no    │ LSFT_T(no) │ no  │   TO(_BASE)   │   │    QK_LLCK    │ no  │   left    │   up    │   down    │  rght   │ OSM(MOD_LSFT) │
+//    ├───────────────┼────┼────┼─────────┼────────────┼─────┼───────────────┘   └───────────────┼─────┼───────────┼─────────┼───────────┼─────────┼───────────────┤
+//    │ OSM(MOD_LCTL) │ no │ no │ MS_BTN3 │  MS_BTN2   │ no  │                                   │ no  │  MS_LEFT  │  MS_UP  │  MS_DOWN  │ MS_RGHT │ OSM(MOD_LCTL) │
+//    └───────────────┴────┴────┴─────────┼────────────┼─────┼───────────────┐   ┌───────────────┼─────┼───────────┼─────────┴───────────┴─────────┴───────────────┘
+//                                        │    esc     │ spc │      no       │   │    MS_BTN1    │ ent │ bACKSPACE │
+//                                        └────────────┴─────┴───────────────┘   └───────────────┴─────┴───────────┘
 [_MOVE] = LAYOUT_split_3x6_3_ex2(
-  OSM(MOD_LGUI) , KC_F1           , KC_F7           , XXXXXXX         , XXXXXXX         , XXXXXXX  , OSM(MOD_LALT) ,     OSM(MOD_RALT) , XXXXXXX  , KC_HOME      , KC_PAGE_UP , KC_PAGE_DOWN , KC_END   , OSM(MOD_LGUI),
-  OSM(MOD_LSFT) , LGUI_T(XXXXXXX) , LALT_T(XXXXXXX) , LCTL_T(XXXXXXX) , LSFT_T(XXXXXXX) , XXXXXXX  , TO(_BASE)     ,     QK_LLCK       , XXXXXXX  , KC_LEFT      , KC_UP      , KC_DOWN      , KC_RIGHT , OSM(MOD_LSFT),
-  OSM(MOD_LCTL) , XXXXXXX         , XXXXXXX         , MS_BTN3         , MS_BTN2         , XXXXXXX  ,                                     XXXXXXX  , MS_LEFT      , MS_UP      , MS_DOWN      , MS_RGHT  , OSM(MOD_LCTL),
-                                                                        KC_ESCAPE       , KC_SPACE , XXXXXXX       ,     MS_BTN1       , KC_ENTER , KC_BACKSPACE
+  OSM(MOD_LGUI) , KC_F1   , KC_F7   , XXXXXXX , XXXXXXX         , XXXXXXX  , OSM(MOD_LALT) ,     OSM(MOD_RALT) , XXXXXXX  , KC_HOME      , KC_PAGE_UP , KC_PAGE_DOWN , KC_END   , OSM(MOD_LGUI),
+  OSM(MOD_LSFT) , XXXXXXX , XXXXXXX , XXXXXXX , LSFT_T(XXXXXXX) , XXXXXXX  , TO(_BASE)     ,     QK_LLCK       , XXXXXXX  , KC_LEFT      , KC_UP      , KC_DOWN      , KC_RIGHT , OSM(MOD_LSFT),
+  OSM(MOD_LCTL) , XXXXXXX , XXXXXXX , MS_BTN3 , MS_BTN2         , XXXXXXX  ,                                     XXXXXXX  , MS_LEFT      , MS_UP      , MS_DOWN      , MS_RGHT  , OSM(MOD_LCTL),
+                                                KC_ESCAPE       , KC_SPACE , XXXXXXX       ,     MS_BTN1       , KC_ENTER , KC_BACKSPACE
 )
 };
 
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BACKSPACE, KC_DEL);
-const key_override_t escape_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_SPACE, KC_TAB);
+const key_override_t escape_tab_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_ESCAPE, KC_TAB);
 // This globally defines all key overrides to be used
 const key_override_t *key_overrides[] = {
-    &delete_key_override,
-    &escape_key_override,
+    &delete_key_override
+// TODO: the idea of overriding esc is nice, but shift-win-esc is my screen lock hotkey. i should use an extended override that only overrides if no other mod is active. then i could also use space again ...
+//    &escape_tab_key_override,
 };
 
 void leader_start_user(void) {
@@ -193,6 +194,14 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
             hsv = (hsv_t) {HSV_MAGENTA};
             hsv.v = 100;
             break;
+        case TO(_BASE):
+            hsv = (hsv_t) {HSV_RED};
+            hsv.v = 50;
+            // light up when return is possible (it always is...)
+            if (layer > 0 || osm) {
+                hsv.v = 250;
+            };
+            break;
         default:
             if (keycode > XXXXXXX) {
                 hsv = (hsv_t) {HSV_WHITE};
@@ -208,7 +217,7 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
         hsv = (hsv_t) {HSV_MAGENTA};
         hsv.v = 100;
     };
-    if (row == 3 && col == 5 && is_layer_locked(_MOVE)) {
+    if (row == 3 && col == 5 && layer == _MOVE) {
         hsv = (hsv_t) {HSV_MAGENTA};
         hsv.v = 250;
     };
@@ -217,17 +226,17 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
         hsv = (hsv_t) {HSV_MAGENTA};
         hsv.v = 100;
     };
-    if (row == 7 && col == 5 && is_layer_locked(_NUM)) {
+    if (row == 7 && col == 5 && layer == _NUM) {
         hsv = (hsv_t) {HSV_MAGENTA};
         hsv.v = 250;
     };
     // lock layer
     if (keycode == QK_LLCK) {
         hsv = (hsv_t) {HSV_MAGENTA};
-        hsv.v = 250;
+        hsv.v = 100;
     };
 
-    // the 4 modifier keys
+    // the 4 "left" modifier keys
     for (uint16_t k = KC_LEFT_CTRL; k <= KC_LEFT_GUI; k++) {
         // m = 0..3, which is the bit to be interested in.
         uint8_t m = k - KC_LEFT_CTRL;
@@ -237,6 +246,14 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
             if ((mds | osm) & MOD_BIT(k)) {
                 hsv.v = 250;
             };
+        };
+    };
+    // in case "right" mod (only via ralt) gets activated
+    if (keycode == OSM(MOD_RALT)) {
+        // slightly darker green
+        hsv = (hsv_t) {150, 130, 50};
+        if ((mds | osm) & MOD_BIT(4)) {
+            hsv.v = 250;
         };
     };
 
