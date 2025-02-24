@@ -74,20 +74,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                KC_ESCAPE    , KC_SPACE , XXXXXXX       ,     XXXXXXX       , KC_ENTER , KC_BACKSPACE
 ),
 
-//    ┌───────────────┬────┬────┬─────────┬────────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬─────────┬───────────┬─────────┬───────────────┐
-//    │ OSM(MOD_LGUI) │ f1 │ f7 │   no    │     no     │ no  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │ no  │   home    │ pAGE_UP │ pAGE_DOWN │   end   │ OSM(MOD_LGUI) │
-//    ├───────────────┼────┼────┼─────────┼────────────┼─────┼───────────────┤   ├───────────────┼─────┼───────────┼─────────┼───────────┼─────────┼───────────────┤
-//    │ OSM(MOD_LSFT) │ no │ no │   no    │ LSFT_T(no) │ no  │   TO(_BASE)   │   │    QK_LLCK    │ no  │   left    │   up    │   down    │  rght   │ OSM(MOD_LSFT) │
-//    ├───────────────┼────┼────┼─────────┼────────────┼─────┼───────────────┘   └───────────────┼─────┼───────────┼─────────┼───────────┼─────────┼───────────────┤
-//    │ OSM(MOD_LCTL) │ no │ no │ MS_BTN3 │  MS_BTN2   │ no  │                                   │ no  │  MS_LEFT  │  MS_UP  │  MS_DOWN  │ MS_RGHT │ OSM(MOD_LCTL) │
-//    └───────────────┴────┴────┴─────────┼────────────┼─────┼───────────────┐   ┌───────────────┼─────┼───────────┼─────────┴───────────┴─────────┴───────────────┘
-//                                        │    esc     │ spc │      no       │   │    MS_BTN1    │ ent │ bACKSPACE │
-//                                        └────────────┴─────┴───────────────┘   └───────────────┴─────┴───────────┘
+//    ┌───────────────┬────┬────┬─────────┬────────────┬────────────────┬───────────────┐   ┌───────────────┬─────┬───────────┬─────────┬───────────┬─────────┬───────────────┐
+//    │ OSM(MOD_LGUI) │ f1 │ f7 │   no    │     no     │  kB_VOLUME_UP  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │ no  │   home    │ pAGE_UP │ pAGE_DOWN │   end   │ OSM(MOD_LGUI) │
+//    ├───────────────┼────┼────┼─────────┼────────────┼────────────────┼───────────────┤   ├───────────────┼─────┼───────────┼─────────┼───────────┼─────────┼───────────────┤
+//    │ OSM(MOD_LSFT) │ no │ no │   no    │ LSFT_T(no) │ kB_VOLUME_DOWN │   TO(_BASE)   │   │    QK_LLCK    │ no  │   left    │   up    │   down    │  rght   │ OSM(MOD_LSFT) │
+//    ├───────────────┼────┼────┼─────────┼────────────┼────────────────┼───────────────┘   └───────────────┼─────┼───────────┼─────────┼───────────┼─────────┼───────────────┤
+//    │ OSM(MOD_LCTL) │ no │ no │ MS_BTN3 │  MS_BTN2   │       no       │                                   │ no  │  MS_LEFT  │  MS_UP  │  MS_DOWN  │ MS_RGHT │ OSM(MOD_LCTL) │
+//    └───────────────┴────┴────┴─────────┼────────────┼────────────────┼───────────────┐   ┌───────────────┼─────┼───────────┼─────────┴───────────┴─────────┴───────────────┘
+//                                        │    esc     │      spc       │      no       │   │    MS_BTN1    │ ent │ bACKSPACE │
+//                                        └────────────┴────────────────┴───────────────┘   └───────────────┴─────┴───────────┘
 [_MOVE] = LAYOUT_split_3x6_3_ex2(
-  OSM(MOD_LGUI) , KC_F1   , KC_F7   , XXXXXXX , XXXXXXX         , XXXXXXX  , OSM(MOD_LALT) ,     OSM(MOD_RALT) , XXXXXXX  , KC_HOME      , KC_PAGE_UP , KC_PAGE_DOWN , KC_END   , OSM(MOD_LGUI),
-  OSM(MOD_LSFT) , XXXXXXX , XXXXXXX , XXXXXXX , LSFT_T(XXXXXXX) , XXXXXXX  , TO(_BASE)     ,     QK_LLCK       , XXXXXXX  , KC_LEFT      , KC_UP      , KC_DOWN      , KC_RIGHT , OSM(MOD_LSFT),
-  OSM(MOD_LCTL) , XXXXXXX , XXXXXXX , MS_BTN3 , MS_BTN2         , XXXXXXX  ,                                     XXXXXXX  , MS_LEFT      , MS_UP      , MS_DOWN      , MS_RGHT  , OSM(MOD_LCTL),
-                                                KC_ESCAPE       , KC_SPACE , XXXXXXX       ,     MS_BTN1       , KC_ENTER , KC_BACKSPACE
+  OSM(MOD_LGUI) , KC_F1   , KC_F7   , XXXXXXX , XXXXXXX         , KC_KB_VOLUME_UP   , OSM(MOD_LALT) ,     OSM(MOD_RALT) , XXXXXXX  , KC_HOME      , KC_PAGE_UP , KC_PAGE_DOWN , KC_END   , OSM(MOD_LGUI),
+  OSM(MOD_LSFT) , XXXXXXX , XXXXXXX , XXXXXXX , LSFT_T(XXXXXXX) , KC_KB_VOLUME_DOWN , TO(_BASE)     ,     QK_LLCK       , XXXXXXX  , KC_LEFT      , KC_UP      , KC_DOWN      , KC_RIGHT , OSM(MOD_LSFT),
+  OSM(MOD_LCTL) , XXXXXXX , XXXXXXX , MS_BTN3 , MS_BTN2         , XXXXXXX           ,                                     XXXXXXX  , MS_LEFT      , MS_UP      , MS_DOWN      , MS_RGHT  , OSM(MOD_LCTL),
+                                                KC_ESCAPE       , KC_SPACE          , XXXXXXX       ,     MS_BTN1       , KC_ENTER , KC_BACKSPACE
 )
 };
 
@@ -194,6 +194,10 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
             hsv = (hsv_t) {HSV_MAGENTA};
             hsv.v = 100;
             break;
+        case KC_KB_VOLUME_UP:
+        case KC_KB_VOLUME_DOWN:
+            hsv = (hsv_t) {HSV_YELLOW};
+            hsv.v = 100;
         case TO(_BASE):
             hsv = (hsv_t) {HSV_RED};
             hsv.v = 50;
