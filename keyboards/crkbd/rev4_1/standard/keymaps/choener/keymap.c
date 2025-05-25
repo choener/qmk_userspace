@@ -120,40 +120,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BACKSPACE, KC_DEL);
-const key_override_t escape_tab_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_ESCAPE, KC_TAB);
-// This globally defines all key overrides to be used
-const key_override_t *key_overrides[] = {
-    &delete_key_override
-// TODO: the idea of overriding esc is nice, but shift-win-esc is my screen lock hotkey. i should use an extended override that only overrides if no other mod is active. then i could also use space again ...
-//    &escape_tab_key_override,
-};
-
-//void leader_start_user(void) {
-//    // Do something when the leader key is pressed
-//};
-
-/* Leader sequences allow for vim-like command sequences
- * https://docs.qmk.fm/features/leader_key
- */
-//void leader_end_user(void) {
-//    // noop or abort
-//    if (leader_sequence_one_key(KC_ESCAPE)) {
-//    };
-//    // reboot into bootloader
-//    if (leader_sequence_two_keys(KC_Q, KC_B)) {
-//        reset_keyboard();
-//    };
-//    // switch to vty-1 (ctrl-alt-f1) or vty-7
-//    if (leader_sequence_two_keys(KC_V, KC_Z)) {
-//        tap_code16(LCTL(LALT(KC_F1)));
-//    };
-//    if (leader_sequence_two_keys(KC_V, KC_X)) {
-//        tap_code16(LCTL(LALT(KC_F7)));
-//    };
-//};
-
-
 /*
  */
 // TODO: characters should be blue, but with shift,etc modifiers cyan.
@@ -372,4 +338,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
     };
 };
+
+/* KEY OVERRIDE
+ */
+
+// const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BACKSPACE, KC_DEL);
+
+// This globally defines all key overrides to be used
+const key_override_t *key_overrides[] = {
+     // &delete_key_override
+};
+
+
+/* LEADER KEY
+ */
+
+
+//void leader_start_user(void) {
+//    // Do something when the leader key is pressed
+//};
+
+/* Leader sequences allow for vim-like command sequences
+ * https://docs.qmk.fm/features/leader_key
+ */
+//void leader_end_user(void) {
+//    // noop or abort
+//    if (leader_sequence_one_key(KC_ESCAPE)) {
+//    };
+//    // reboot into bootloader
+//    if (leader_sequence_two_keys(KC_Q, KC_B)) {
+//        reset_keyboard();
+//    };
+//    // switch to vty-1 (ctrl-alt-f1) or vty-7
+//    if (leader_sequence_two_keys(KC_V, KC_Z)) {
+//        tap_code16(LCTL(LALT(KC_F1)));
+//    };
+//    if (leader_sequence_two_keys(KC_V, KC_X)) {
+//        tap_code16(LCTL(LALT(KC_F7)));
+//    };
+//};
+
 
