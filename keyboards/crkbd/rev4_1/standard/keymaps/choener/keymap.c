@@ -43,20 +43,20 @@ enum layers {
  */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-//    ┌───────────────┬───┬───┬───┬───────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬───┬───┬───────────────┬───────────────┐
-//    │ OSM(MOD_LGUI) │ q │ w │ f │     p     │  b  │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │  j  │     l     │ u │ y │      tab      │ OSM(MOD_LGUI) │
-//    ├───────────────┼───┼───┼───┼───────────┼─────┼───────────────┤   ├───────────────┼─────┼───────────┼───┼───┼───────────────┼───────────────┤
-//    │ OSM(MOD_LSFT) │ a │ r │ s │ LSFT_T(t) │  g  │   TO(_BASE)   │   │  OSL(_OTHER)  │  m  │ LSFT_T(n) │ e │ i │       o       │ OSM(MOD_LSFT) │
-//    ├───────────────┼───┼───┼───┼───────────┼─────┼───────────────┘   └───────────────┼─────┼───────────┼───┼───┼───────────────┼───────────────┤
-//    │ OSM(MOD_LCTL) │ z │ x │ c │     d     │  v  │                                   │  k  │     h     │ , │ . │ OSM(MOD_LALT) │ OSM(MOD_LCTL) │
-//    └───────────────┴───┴───┴───┼───────────┼─────┼───────────────┐   ┌───────────────┼─────┼───────────┼───┴───┴───────────────┴───────────────┘
-//                                │    esc    │ spc │  OSL(_MOVE)   │   │   OSL(_NUM)   │ ent │ bACKSPACE │
-//                                └───────────┴─────┴───────────────┘   └───────────────┴─────┴───────────┘
+//    ┌───────────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────────┐   ┌───────────────┬───────────┬───────────┬───────────┬───────────┬───────────────┬───────────────┐
+//    │ OSM(MOD_LGUI) │     q     │     w     │     f     │     p     │     b     │ OSM(MOD_LALT) │   │ OSM(MOD_RALT) │     j     │     l     │     u     │     y     │      tab      │ OSM(MOD_LGUI) │
+//    ├───────────────┼───────────┼───────────┼───────────┼───────────┼───────────┼───────────────┤   ├───────────────┼───────────┼───────────┼───────────┼───────────┼───────────────┼───────────────┤
+//    │ OSM(MOD_LSFT) │ LALT_T(a) │ LGUI_T(r) │ LCTL_T(s) │ LSFT_T(t) │ LGUI_T(g) │   TO(_BASE)   │   │  OSL(_OTHER)  │ LGUI_T(m) │ LSFT_T(n) │ LCTL_T(e) │ LGUI_T(i) │   LALT_T(o)   │ OSM(MOD_LSFT) │
+//    ├───────────────┼───────────┼───────────┼───────────┼───────────┼───────────┼───────────────┘   └───────────────┼───────────┼───────────┼───────────┼───────────┼───────────────┼───────────────┤
+//    │ OSM(MOD_LCTL) │     z     │     x     │     c     │     d     │     v     │                                   │     k     │     h     │     ,     │     .     │ OSM(MOD_LALT) │ OSM(MOD_LCTL) │
+//    └───────────────┴───────────┴───────────┴───────────┼───────────┼───────────┼───────────────┐   ┌───────────────┼───────────┼───────────┼───────────┴───────────┴───────────────┴───────────────┘
+//                                                        │    esc    │    spc    │  OSL(_MOVE)   │   │   OSL(_NUM)   │    ent    │ bACKSPACE │
+//                                                        └───────────┴───────────┴───────────────┘   └───────────────┴───────────┴───────────┘
 [_BASE] = LAYOUT_split_3x6_3_ex2(
-  OSM(MOD_LGUI) , KC_Q , KC_W , KC_F , KC_P         , KC_B     , OSM(MOD_LALT) ,     OSM(MOD_RALT) , KC_J     , KC_L         , KC_U     , KC_Y   , KC_TAB        , OSM(MOD_LGUI),
-  OSM(MOD_LSFT) , KC_A , KC_R , KC_S , LSFT_T(KC_T) , KC_G     , TO(_BASE)     ,     OSL(_OTHER)   , KC_M     , LSFT_T(KC_N) , KC_E     , KC_I   , KC_O          , OSM(MOD_LSFT),
-  OSM(MOD_LCTL) , KC_Z , KC_X , KC_C , KC_D         , KC_V     ,                                     KC_K     , KC_H         , KC_COMMA , KC_DOT , OSM(MOD_LALT) , OSM(MOD_LCTL),
-                                       KC_ESCAPE    , KC_SPACE , OSL(_MOVE)    ,     OSL(_NUM)     , KC_ENTER , KC_BACKSPACE
+  OSM(MOD_LGUI) , KC_Q         , KC_W         , KC_F         , KC_P         , KC_B         , OSM(MOD_LALT) ,     OSM(MOD_RALT) , KC_J         , KC_L         , KC_U         , KC_Y         , KC_TAB        , OSM(MOD_LGUI),
+  OSM(MOD_LSFT) , LALT_T(KC_A) , LGUI_T(KC_R) , LCTL_T(KC_S) , LSFT_T(KC_T) , LGUI_T(KC_G) , TO(_BASE)     ,     OSL(_OTHER)   , LGUI_T(KC_M) , LSFT_T(KC_N) , LCTL_T(KC_E) , LGUI_T(KC_I) , LALT_T(KC_O)  , OSM(MOD_LSFT),
+  OSM(MOD_LCTL) , KC_Z         , KC_X         , KC_C         , KC_D         , KC_V         ,                                     KC_K         , KC_H         , KC_COMMA     , KC_DOT       , OSM(MOD_LALT) , OSM(MOD_LCTL),
+                                                               KC_ESCAPE    , KC_SPACE     , OSL(_MOVE)    ,     OSL(_NUM)     , KC_ENTER     , KC_BACKSPACE
 ),
 
 //    ┌───────────────┬───┬───┬───┬───────────┬─────┬───────────────┐   ┌───────────────┬─────┬───────────┬────┬────┬───────────────┬───────────────┐
@@ -107,6 +107,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             KC_ESCAPE , KC_SPACE , XXXXXXX       ,     XXXXXXX       , KC_ENTER , KC_BACKSPACE
 )
 };
+
+// diferent keys get different tapping terms
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+//        case LSFT_T(KC_G):
+//            return TAPPING_TERM + 0;
+//        case LSFT_T(KC_N):
+//            return TAPPING_TERM + 0;
+        default:
+            return TAPPING_TERM;
+    }
+}
 
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BACKSPACE, KC_DEL);
 const key_override_t escape_tab_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_ESCAPE, KC_TAB);
@@ -293,6 +305,8 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
     };
 
     // leader sequence stuff. Will override everything else
+#ifdef LEADER_ENABLE
+#then
     if (leader_sequence_active()) {
         //BUG: leader_sequence_active is *not* transferred to slave side of keyboard?
         // disable all LEDs
@@ -314,6 +328,7 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
                 hsv.v = 250;
         };
     };
+#endif
 
 
     rgb_t rgb = hsv_to_rgb(hsv);
