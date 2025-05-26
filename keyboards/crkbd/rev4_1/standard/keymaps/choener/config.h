@@ -52,8 +52,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define HOLD_ON_OTHER_KEYPRESS
 #define CHORDAL_HOLD
 
-#define KEY_OVERRIDE_ENABLE
-
 #ifdef RGBLIGHT_ENABLE
 //    #define RGBLIGHT_EFFECT_BREATHING
 //    #define RGBLIGHT_EFFECT_RAINBOW_MOOD
