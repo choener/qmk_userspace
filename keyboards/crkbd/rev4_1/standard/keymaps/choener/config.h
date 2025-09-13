@@ -52,6 +52,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define HOLD_ON_OTHER_KEYPRESS
 #define CHORDAL_HOLD
 
+// trying combos for the modifier keys
+#define COMBO_TERM 25
+#define COMBO_MUST_HOLD_MODS
+#define COMBO_HOLD_TERM 175
+
 #ifdef RGBLIGHT_ENABLE
 //    #define RGBLIGHT_EFFECT_BREATHING
 //    #define RGBLIGHT_EFFECT_RAINBOW_MOOD
