@@ -28,19 +28,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // TODO: https://github.com/sotte/sotte_qmk_keyboard_layout/blob/main/keyboards/crkbd/keymaps/sotte/keymap.c
 // TODO: Sotte has an interesting config, where KC_ESC cancels oneshot layers!
 // TODO: use defines to allow enabling and disabling home-row mods?
+// TODO: put enter on CD and escape on FP?
+// TODO: frequently used keys: .:   ,;   -=   possibly in this configuration; need to modify shift handling for these keys
+// TODO: then '" which is already convenient for shifting
 
 #include QMK_KEYBOARD_H
 
 enum layers {
     _BASE,
-    _EXTEND,
-    _FUNCTION,
+    _NAV,
     _SYMBOLS,
     _NUMBERS,
+    _FUNCTION,
 };
 
 #define OSM_SFT OSM(MOD_LSFT)
-#define SPC_NAV LT(_EXTEND, KC_SPC)
+#define SPC_NAV LT(_NAV, KC_SPC)
 
 // NOTE: If left and right modifiers are pressed together, they are all interpreted as right modifiers!
 // https://github.com/sotte/sotte_qmk_keyboard_layout
@@ -48,58 +51,44 @@ enum layers {
 /*
  * https://docs.qmk.fm/mod_tap
  */
+// NOTE: left-handed thumb hold to toggle nav layer, which has modifier keys on the lhs.
+// NOTE: right-handed thumb hold to toggle sy
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-//    ┌────┬───┬───┬───┬────┬──────┬────┐   ┌────┬─────────┬────┬───┬───┬────┬────┐
-//    │ no │ q │ w │ f │ p  │  b   │ no │   │ no │    j    │ l  │ u │ y │ no │ no │
-//    ├────┼───┼───┼───┼────┼──────┼────┤   ├────┼─────────┼────┼───┼───┼────┼────┤
-//    │ no │ a │ r │ s │ t  │  g   │ no │   │ no │    m    │ n  │ e │ i │ o  │ no │
-//    ├────┼───┼───┼───┼────┼──────┼────┘   └────┼─────────┼────┼───┼───┼────┼────┤
-//    │ no │ z │ x │ c │ d  │  v   │             │    k    │ h  │ , │ . │ no │ no │
-//    └────┴───┴───┴───┼────┼──────┼────┐   ┌────┼─────────┼────┼───┴───┴────┴────┘
-//                     │ no │ lsft │ no │   │ no │ SPC_NAV │ no │
-//                     └────┴──────┴────┘   └────┴─────────┴────┘
+//    ┌────┬───┬───┬───┬────┬─────────┬────┐   ┌────┬─────────┬────┬───┬───┬───┬────┐
+//    │ no │ q │ w │ f │ p  │    b    │ no │   │ no │    j    │ l  │ u │ y │ ' │ no │
+//    ├────┼───┼───┼───┼────┼─────────┼────┤   ├────┼─────────┼────┼───┼───┼───┼────┤
+//    │ no │ a │ r │ s │ t  │    g    │ no │   │ no │    m    │ n  │ e │ i │ o │ no │
+//    ├────┼───┼───┼───┼────┼─────────┼────┘   └────┼─────────┼────┼───┼───┼───┼────┤
+//    │ no │ z │ x │ c │ d  │    v    │             │    k    │ h  │ , │ . │ - │ no │
+//    └────┴───┴───┴───┼────┼─────────┼────┐   ┌────┼─────────┼────┼───┴───┴───┴────┘
+//                     │ no │ SPC_NAV │ no │   │ no │ OS_LSFT │ no │
+//                     └────┴─────────┴────┘   └────┴─────────┴────┘
 [_BASE] = LAYOUT_split_3x6_3_ex2(
-  XXXXXXX , KC_Q , KC_W , KC_F , KC_P    , KC_B    , XXXXXXX ,     XXXXXXX , KC_J    , KC_L    , KC_U     , KC_Y   , XXXXXXX , XXXXXXX,
-  XXXXXXX , KC_A , KC_R , KC_S , KC_T    , KC_G    , XXXXXXX ,     XXXXXXX , KC_M    , KC_N    , KC_E     , KC_I   , KC_O    , XXXXXXX,
-  XXXXXXX , KC_Z , KC_X , KC_C , KC_D    , KC_V    ,                         KC_K    , KC_H    , KC_COMMA , KC_DOT , XXXXXXX , XXXXXXX,
-                                 XXXXXXX , KC_LSFT , XXXXXXX ,     XXXXXXX , SPC_NAV , XXXXXXX
+  XXXXXXX , KC_Q , KC_W , KC_F , KC_P    , KC_B    , XXXXXXX ,     XXXXXXX , KC_J    , KC_L    , KC_U     , KC_Y   , KC_QUOTE , XXXXXXX,
+  XXXXXXX , KC_A , KC_R , KC_S , KC_T    , KC_G    , XXXXXXX ,     XXXXXXX , KC_M    , KC_N    , KC_E     , KC_I   , KC_O     , XXXXXXX,
+  XXXXXXX , KC_Z , KC_X , KC_C , KC_D    , KC_V    ,                         KC_K    , KC_H    , KC_COMMA , KC_DOT , KC_MINUS , XXXXXXX,
+                                 XXXXXXX , SPC_NAV , XXXXXXX ,     XXXXXXX , OS_LSFT , XXXXXXX
 ),
 
-//    ┌────┬─────────┬─────────┬─────────┬─────────┬─────┬────┐   ┌────┬───────────┬───────────┬──────┬──────┬────┬────┐
-//    │ no │   esc   │   no    │   no    │   no    │ ins │ no │   │ no │  pAGE_UP  │   home    │  up  │ end  │ no │ no │
-//    ├────┼─────────┼─────────┼─────────┼─────────┼─────┼────┤   ├────┼───────────┼───────────┼──────┼──────┼────┼────┤
-//    │ no │ OS_LALT │ OS_LGUI │ OS_LCTL │ OS_LSFT │ no  │ no │   │ no │ pAGE_DOWN │   left    │ down │ rght │ no │ no │
-//    ├────┼─────────┼─────────┼─────────┼─────────┼─────┼────┘   └────┼───────────┼───────────┼──────┼──────┼────┼────┤
-//    │ no │   no    │   no    │   no    │   no    │ no  │             │    no     │ bACKSPACE │  no  │  no  │ no │ no │
-//    └────┴─────────┴─────────┴─────────┼─────────┼─────┼────┐   ┌────┼───────────┼───────────┼──────┴──────┴────┴────┘
-//                                       │   no    │ no  │ no │   │ no │    ent    │    no     │
-//                                       └─────────┴─────┴────┘   └────┴───────────┴───────────┘
-[_EXTEND] = LAYOUT_split_3x6_3_ex2(
-  XXXXXXX , KC_ESC  , XXXXXXX , XXXXXXX , XXXXXXX , KC_INS  , XXXXXXX ,     XXXXXXX , KC_PAGE_UP   , KC_HOME      , KC_UP   , KC_END   , XXXXXXX , XXXXXXX,
+//    ┌────┬─────────┬─────────┬─────────┬─────────┬────┬────┐   ┌────┬───────────┬───────────┬──────┬──────┬────┬────┐
+//    │ no │   no    │   no    │   no    │   no    │ no │ no │   │ no │  pAGE_UP  │   home    │  up  │ end  │ no │ no │
+//    ├────┼─────────┼─────────┼─────────┼─────────┼────┼────┤   ├────┼───────────┼───────────┼──────┼──────┼────┼────┤
+//    │ no │ OS_LALT │ OS_LGUI │ OS_LCTL │ OS_LSFT │ no │ no │   │ no │ pAGE_DOWN │   left    │ down │ rght │ no │ no │
+//    ├────┼─────────┼─────────┼─────────┼─────────┼────┼────┘   └────┼───────────┼───────────┼──────┼──────┼────┼────┤
+//    │ no │   no    │   no    │   no    │   no    │ no │             │    no     │ bACKSPACE │  no  │  no  │ no │ no │
+//    └────┴─────────┴─────────┴─────────┼─────────┼────┼────┐   ┌────┼───────────┼───────────┼──────┴──────┴────┴────┘
+//                                       │   no    │ no │ no │   │ no │    ent    │    no     │
+//                                       └─────────┴────┴────┘   └────┴───────────┴───────────┘
+[_NAV] = LAYOUT_split_3x6_3_ex2(
+  XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,     XXXXXXX , KC_PAGE_UP   , KC_HOME      , KC_UP   , KC_END   , XXXXXXX , XXXXXXX,
   XXXXXXX , OS_LALT , OS_LGUI , OS_LCTL , OS_LSFT , XXXXXXX , XXXXXXX ,     XXXXXXX , KC_PAGE_DOWN , KC_LEFT      , KC_DOWN , KC_RIGHT , XXXXXXX , XXXXXXX,
   XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                         XXXXXXX      , KC_BACKSPACE , XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX,
                                           XXXXXXX , XXXXXXX , XXXXXXX ,     XXXXXXX , KC_ENTER     , XXXXXXX
 ),
 
-//    ┌────┬─────────┬─────────┬─────────┬─────────┬────┬────┐   ┌────┬─────┬────┬────┬────┬────┬────┐
-//    │ no │   no    │   no    │   no    │   no    │ no │ no │   │ no │ no  │ no │ no │ no │ no │ no │
-//    ├────┼─────────┼─────────┼─────────┼─────────┼────┼────┤   ├────┼─────┼────┼────┼────┼────┼────┤
-//    │ no │ OS_LALT │ OS_LGUI │ OS_LCTL │ OS_LSFT │ no │ no │   │ no │ no  │ no │ no │ no │ no │ no │
-//    ├────┼─────────┼─────────┼─────────┼─────────┼────┼────┘   └────┼─────┼────┼────┼────┼────┼────┤
-//    │ no │   no    │   no    │   no    │   no    │ no │             │ f10 │ f1 │ no │ no │ no │ no │
-//    └────┴─────────┴─────────┴─────────┼─────────┼────┼────┐   ┌────┼─────┼────┼────┴────┴────┴────┘
-//                                       │   no    │ no │ no │   │ no │ no  │ no │
-//                                       └─────────┴────┴────┘   └────┴─────┴────┘
-[_FUNCTION] = LAYOUT_split_3x6_3_ex2(
-  XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
-  XXXXXXX , OS_LALT , OS_LGUI , OS_LCTL , OS_LSFT , XXXXXXX , XXXXXXX ,     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
-  XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                         KC_F10  , KC_F1   , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
-                                          XXXXXXX , XXXXXXX , XXXXXXX ,     XXXXXXX , XXXXXXX , XXXXXXX
-),
-
 //    ┌────┬─────────┬─────────┬─────────┬─────────┬────┬────┐   ┌────┬────┬────┬────┬────┬────┬────┐
-//    │ no │    !    │    @    │    #    │    $    │ no │ no │   │ no │ no │ no │ no │ no │ no │ no │
+//    │ no │    !    │    @    │    #    │    $    │ %  │ ^  │   │ no │ no │ no │ no │ no │ no │ no │
 //    ├────┼─────────┼─────────┼─────────┼─────────┼────┼────┤   ├────┼────┼────┼────┼────┼────┼────┤
 //    │ no │ OS_LALT │ OS_LGUI │ OS_LCTL │ OS_LSFT │ no │ no │   │ no │ no │ no │ no │ no │ no │ no │
 //    ├────┼─────────┼─────────┼─────────┼─────────┼────┼────┘   └────┼────┼────┼────┼────┼────┼────┤
@@ -108,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                                       │   no    │ no │ no │   │ no │ no │ no │
 //                                       └─────────┴────┴────┘   └────┴────┴────┘
 [_SYMBOLS] = LAYOUT_split_3x6_3_ex2(
-  XXXXXXX , KC_EXCLAIM , KC_AT   , KC_HASH , KC_DOLLAR , XXXXXXX , XXXXXXX ,     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
+  XXXXXXX , KC_EXCLAIM , KC_AT   , KC_HASH , KC_DOLLAR , KC_PERC , KC_CIRC ,     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
   XXXXXXX , OS_LALT    , OS_LGUI , OS_LCTL , OS_LSFT   , XXXXXXX , XXXXXXX ,     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
   XXXXXXX , XXXXXXX    , XXXXXXX , XXXXXXX , XXXXXXX   , XXXXXXX ,                         XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
                                              XXXXXXX   , XXXXXXX , XXXXXXX ,     XXXXXXX , XXXXXXX , XXXXXXX
@@ -127,6 +116,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
   XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
   XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                         XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
+                                          XXXXXXX , XXXXXXX , XXXXXXX ,     XXXXXXX , XXXXXXX , XXXXXXX
+),
+
+//    ┌────┬─────────┬─────────┬─────────┬─────────┬────┬────┐   ┌────┬─────┬────┬────┬────┬────┬────┐
+//    │ no │   no    │   no    │   no    │   no    │ no │ no │   │ no │ no  │ no │ no │ no │ no │ no │
+//    ├────┼─────────┼─────────┼─────────┼─────────┼────┼────┤   ├────┼─────┼────┼────┼────┼────┼────┤
+//    │ no │ OS_LALT │ OS_LGUI │ OS_LCTL │ OS_LSFT │ no │ no │   │ no │ no  │ no │ no │ no │ no │ no │
+//    ├────┼─────────┼─────────┼─────────┼─────────┼────┼────┘   └────┼─────┼────┼────┼────┼────┼────┤
+//    │ no │   no    │   no    │   no    │   no    │ no │             │ f10 │ f1 │ no │ no │ no │ no │
+//    └────┴─────────┴─────────┴─────────┼─────────┼────┼────┐   ┌────┼─────┼────┼────┴────┴────┴────┘
+//                                       │   no    │ no │ no │   │ no │ no  │ no │
+//                                       └─────────┴────┴────┘   └────┴─────┴────┘
+[_FUNCTION] = LAYOUT_split_3x6_3_ex2(
+  XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
+  XXXXXXX , OS_LALT , OS_LGUI , OS_LCTL , OS_LSFT , XXXXXXX , XXXXXXX ,     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
+  XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                         KC_F10  , KC_F1   , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
                                           XXXXXXX , XXXXXXX , XXXXXXX ,     XXXXXXX , XXXXXXX , XXXXXXX
 )
 };
