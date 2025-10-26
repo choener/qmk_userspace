@@ -31,11 +31,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // TODO: put enter on CD and escape on FP?
 // TODO: frequently used keys: .:   ,;   -=   possibly in this configuration; need to modify shift handling for these keys
 // TODO: then '" which is already convenient for shifting
+// TODO: switch between colemak and gallium layer?
 
 #include QMK_KEYBOARD_H
 
 enum layers {
     _BASE,
+    _GALLIUM,
     _NAV,
     _SYMBOLS,
     _NUMBERS,
@@ -55,20 +57,36 @@ enum layers {
 // NOTE: right-handed thumb hold to toggle sy
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-//    ┌────┬───┬───┬───┬────┬─────────┬────┐   ┌────┬─────────┬────┬───┬───┬───┬────┐
-//    │ no │ q │ w │ f │ p  │    b    │ no │   │ no │    j    │ l  │ u │ y │ ' │ no │
-//    ├────┼───┼───┼───┼────┼─────────┼────┤   ├────┼─────────┼────┼───┼───┼───┼────┤
-//    │ no │ a │ r │ s │ t  │    g    │ no │   │ no │    m    │ n  │ e │ i │ o │ no │
-//    ├────┼───┼───┼───┼────┼─────────┼────┘   └────┼─────────┼────┼───┼───┼───┼────┤
-//    │ no │ z │ x │ c │ d  │    v    │             │    k    │ h  │ , │ . │ - │ no │
-//    └────┴───┴───┴───┼────┼─────────┼────┐   ┌────┼─────────┼────┼───┴───┴───┴────┘
-//                     │ no │ SPC_NAV │ no │   │ no │ OS_LSFT │ no │
-//                     └────┴─────────┴────┘   └────┴─────────┴────┘
+//    ┌────┬───┬───┬───┬────┬─────────┬───────────────┐   ┌────┬─────────┬────┬───┬───┬───┬────┐
+//    │ no │ q │ w │ f │ p  │    b    │ PDF(_GALLIUM) │   │ no │    j    │ l  │ u │ y │ ' │ no │
+//    ├────┼───┼───┼───┼────┼─────────┼───────────────┤   ├────┼─────────┼────┼───┼───┼───┼────┤
+//    │ no │ a │ r │ s │ t  │    g    │      no       │   │ no │    m    │ n  │ e │ i │ o │ no │
+//    ├────┼───┼───┼───┼────┼─────────┼───────────────┘   └────┼─────────┼────┼───┼───┼───┼────┤
+//    │ no │ z │ x │ c │ d  │    v    │                        │    k    │ h  │ , │ . │ - │ no │
+//    └────┴───┴───┴───┼────┼─────────┼───────────────┐   ┌────┼─────────┼────┼───┴───┴───┴────┘
+//                     │ no │ SPC_NAV │      no       │   │ no │ OS_LSFT │ no │
+//                     └────┴─────────┴───────────────┘   └────┴─────────┴────┘
 [_BASE] = LAYOUT_split_3x6_3_ex2(
-  XXXXXXX , KC_Q , KC_W , KC_F , KC_P    , KC_B    , XXXXXXX ,     XXXXXXX , KC_J    , KC_L    , KC_U     , KC_Y   , KC_QUOTE , XXXXXXX,
-  XXXXXXX , KC_A , KC_R , KC_S , KC_T    , KC_G    , XXXXXXX ,     XXXXXXX , KC_M    , KC_N    , KC_E     , KC_I   , KC_O     , XXXXXXX,
-  XXXXXXX , KC_Z , KC_X , KC_C , KC_D    , KC_V    ,                         KC_K    , KC_H    , KC_COMMA , KC_DOT , KC_MINUS , XXXXXXX,
-                                 XXXXXXX , SPC_NAV , XXXXXXX ,     XXXXXXX , OS_LSFT , XXXXXXX
+  XXXXXXX , KC_Q , KC_W , KC_F , KC_P    , KC_B    , PDF(_GALLIUM) ,     XXXXXXX , KC_J    , KC_L    , KC_U     , KC_Y   , KC_QUOTE , XXXXXXX,
+  XXXXXXX , KC_A , KC_R , KC_S , KC_T    , KC_G    , XXXXXXX       ,     XXXXXXX , KC_M    , KC_N    , KC_E     , KC_I   , KC_O     , XXXXXXX,
+  XXXXXXX , KC_Z , KC_X , KC_C , KC_D    , KC_V    ,                               KC_K    , KC_H    , KC_COMMA , KC_DOT , KC_MINUS , XXXXXXX,
+                                 XXXXXXX , SPC_NAV , XXXXXXX       ,     XXXXXXX , OS_LSFT , XXXXXXX
+),
+
+//    ┌────┬───┬───┬───┬────┬─────────┬────────────┐   ┌────┬─────────┬────┬────┬────┬────┬────┐
+//    │ no │ b │ l │ d │ c  │    v    │ PDF(_BASE) │   │ no │    j    │ y  │ o  │ u  │ no │ no │
+//    ├────┼───┼───┼───┼────┼─────────┼────────────┤   ├────┼─────────┼────┼────┼────┼────┼────┤
+//    │ no │ n │ r │ s │ t  │    g    │     no     │   │ no │    p    │ h  │ a  │ e  │ i  │ no │
+//    ├────┼───┼───┼───┼────┼─────────┼────────────┘   └────┼─────────┼────┼────┼────┼────┼────┤
+//    │ no │ x │ q │ h │ w  │    z    │                     │    k    │ f  │ no │ no │ no │ no │
+//    └────┴───┴───┴───┼────┼─────────┼────────────┐   ┌────┼─────────┼────┼────┴────┴────┴────┘
+//                     │ no │ SPC_NAV │     no     │   │ no │ OS_LSFT │ no │
+//                     └────┴─────────┴────────────┘   └────┴─────────┴────┘
+[_GALLIUM] = LAYOUT_split_3x6_3_ex2(
+  XXXXXXX , KC_B , KC_L , KC_D , KC_C    , KC_V    , PDF(_BASE) ,     XXXXXXX , KC_J    , KC_Y    , KC_O    , KC_U    , XXXXXXX , XXXXXXX,
+  XXXXXXX , KC_N , KC_R , KC_S , KC_T    , KC_G    , XXXXXXX    ,     XXXXXXX , KC_P    , KC_H    , KC_A    , KC_E    , KC_I    , XXXXXXX,
+  XXXXXXX , KC_X , KC_Q , KC_H , KC_W    , KC_Z    ,                            KC_K    , KC_F    , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX,
+                                 XXXXXXX , SPC_NAV , XXXXXXX    ,     XXXXXXX , OS_LSFT , XXXXXXX
 ),
 
 //    ┌────┬─────────┬─────────┬─────────┬─────────┬────┬────┐   ┌────┬───────────┬───────────┬──────┬──────┬────┬────┐
