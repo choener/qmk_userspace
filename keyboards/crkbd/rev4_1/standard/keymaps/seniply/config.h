@@ -37,6 +37,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //back to base layer after 60 min idle
 #define LAYER_LOCK_IDLE_TIMEOUT 60000
 
+//double tap on shift does caps-word
+#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
+
 /*
  * Activating quick-tap would enable hold via double-tap
  */
