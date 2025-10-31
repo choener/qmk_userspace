@@ -23,6 +23,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * https://github.com/qmk/qmk_firmware/blob/master/quantum/quantum_keycodes.h
  */
 
+/*
+ * https://keyboard-layout-optimizer.fly.dev/
+ * https://dariogoetz.github.io/keyboard_layout_optimizer/
+ */
+
 // TODO: https://docs.qmk.fm/features/caps_word
 // TODO: Add qmk repeat and anti-repeat keys, possibly prominently
 // TODO: https://github.com/sotte/sotte_qmk_keyboard_layout/blob/main/keyboards/crkbd/keymaps/sotte/keymap.c
@@ -35,6 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // TODO: LSFT should do caps-word on double tap (and does layer switch on hold)
 
 #include QMK_KEYBOARD_H
+#include "config.h"
 
 enum layers {
     _BASE,
@@ -61,20 +67,20 @@ enum layers {
 // ßbldcvzyou,önrstgphaeiqxmwjkf.üä
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-//    ┌─────────┬───┬───┬───┬─────────┬─────────┬───────────────┐   ┌─────────┬───────────┬────────┬───┬───┬───┬──────┐
-//    │ OS_LALT │ q │ w │ f │    p    │    b    │ PDF(_GALLIUM) │   │   no    │     j     │   l    │ u │ y │ ' │  -   │
-//    ├─────────┼───┼───┼───┼─────────┼─────────┼───────────────┤   ├─────────┼───────────┼────────┼───┼───┼───┼──────┤
-//    │ OS_LGUI │ a │ r │ s │    t    │    g    │      no       │   │   no    │     m     │   n    │ e │ i │ o │ esc  │
-//    ├─────────┼───┼───┼───┼─────────┼─────────┼───────────────┘   └─────────┼───────────┼────────┼───┼───┼───┼──────┤
-//    │ OS_LSFT │ z │ x │ c │    d    │    v    │                             │     k     │   h    │ . │ , │ / │ bspc │
-//    └─────────┴───┴───┴───┼─────────┼─────────┼───────────────┐   ┌─────────┼───────────┼────────┼───┴───┴───┴──────┘
-//                          │ QK_AREP │ SPC_NAV │    OS_LCTL    │   │ OS_LSFT │ ENTER_SYM │ QK_REP │
-//                          └─────────┴─────────┴───────────────┘   └─────────┴───────────┴────────┘
+//    ┌─────────┬───┬───┬───┬─────────┬─────────┬───────────────┐   ┌───────────────┬───────────┬────────┬───┬───┬───┬──────┐
+//    │ OS_LALT │ q │ w │ f │    p    │    b    │ PDF(_GALLIUM) │   │      no       │     j     │   l    │ u │ y │ ' │  -   │
+//    ├─────────┼───┼───┼───┼─────────┼─────────┼───────────────┤   ├───────────────┼───────────┼────────┼───┼───┼───┼──────┤
+//    │ OS_LGUI │ a │ r │ s │    t    │    g    │      no       │   │      no       │     m     │   n    │ e │ i │ o │ esc  │
+//    ├─────────┼───┼───┼───┼─────────┼─────────┼───────────────┘   └───────────────┼───────────┼────────┼───┼───┼───┼──────┤
+//    │ OS_LSFT │ z │ x │ c │    d    │    v    │                                   │     k     │   h    │ . │ , │ / │ bspc │
+//    └─────────┴───┴───┴───┼─────────┼─────────┼───────────────┐   ┌───────────────┼───────────┼────────┼───┴───┴───┴──────┘
+//                          │ QK_AREP │ SPC_NAV │    OS_LCTL    │   │ OSM(MOD_LSFT) │ ENTER_SYM │ QK_REP │
+//                          └─────────┴─────────┴───────────────┘   └───────────────┴───────────┴────────┘
 [_BASE] = LAYOUT_split_3x6_3_ex2(
-  OS_LALT , KC_Q , KC_W , KC_F , KC_P    , KC_B    , PDF(_GALLIUM) ,     XXXXXXX , KC_J      , KC_L   , KC_U   , KC_Y     , KC_QUOTE , KC_MINUS,
-  OS_LGUI , KC_A , KC_R , KC_S , KC_T    , KC_G    , XXXXXXX       ,     XXXXXXX , KC_M      , KC_N   , KC_E   , KC_I     , KC_O     , KC_ESC  ,
-  OS_LSFT , KC_Z , KC_X , KC_C , KC_D    , KC_V    ,                               KC_K      , KC_H   , KC_DOT , KC_COMMA , KC_SLASH , KC_BSPC ,
-                                 QK_AREP , SPC_NAV , OS_LCTL       ,     OS_LSFT , ENTER_SYM , QK_REP
+  OS_LALT , KC_Q , KC_W , KC_F , KC_P    , KC_B    , PDF(_GALLIUM) ,     XXXXXXX       , KC_J      , KC_L   , KC_U   , KC_Y     , KC_QUOTE , KC_MINUS,
+  OS_LGUI , KC_A , KC_R , KC_S , KC_T    , KC_G    , XXXXXXX       ,     XXXXXXX       , KC_M      , KC_N   , KC_E   , KC_I     , KC_O     , KC_ESC  ,
+  OS_LSFT , KC_Z , KC_X , KC_C , KC_D    , KC_V    ,                                     KC_K      , KC_H   , KC_DOT , KC_COMMA , KC_SLASH , KC_BSPC ,
+                                 QK_AREP , SPC_NAV , OS_LCTL       ,     OSM(MOD_LSFT) , ENTER_SYM , QK_REP
 ),
 
 //    ┌─────────┬───┬───┬───┬─────────┬─────────┬────────────┐   ┌─────────┬───────────┬────────┬───┬───┬────┬──────┐
@@ -98,14 +104,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //    ├────┼─────────┼─────────┼─────────┼─────────┼────┼─────────┤   ├────┼──────────────┼──────┼──────┼──────┼────┼────┤
 //    │ no │ OS_LALT │ OS_LGUI │ OS_LCTL │ OS_LSFT │ no │   no    │   │ no │     pgdn     │ left │ down │ rght │ no │ no │
 //    ├────┼─────────┼─────────┼─────────┼─────────┼────┼─────────┘   └────┼──────────────┼──────┼──────┼──────┼────┼────┤
-//    │ no │   no    │   no    │   no    │   no    │ no │                  │     ent      │ tab  │ bspc │  no  │ no │ no │
+//    │ no │   no    │   no    │   no    │   no    │ no │                  │     ent      │ tab  │ bspc │ del  │ no │ no │
 //    └────┴─────────┴─────────┴─────────┼─────────┼────┼─────────┐   ┌────┼──────────────┼──────┼──────┴──────┴────┴────┘
 //                                       │   no    │ no │   no    │   │ no │ MO(_NUMBERS) │  no  │
 //                                       └─────────┴────┴─────────┘   └────┴──────────────┴──────┘
 [_NAV] = LAYOUT_split_3x6_3_ex2(
   XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , QK_LLCK ,     XXXXXXX , KC_PGUP      , KC_HOME , KC_UP   , KC_END   , XXXXXXX , XXXXXXX,
   XXXXXXX , OS_LALT , OS_LGUI , OS_LCTL , OS_LSFT , XXXXXXX , XXXXXXX ,     XXXXXXX , KC_PGDN      , KC_LEFT , KC_DOWN , KC_RIGHT , XXXXXXX , XXXXXXX,
-  XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                         KC_ENTER     , KC_TAB  , KC_BSPC , XXXXXXX  , XXXXXXX , XXXXXXX,
+  XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                         KC_ENTER     , KC_TAB  , KC_BSPC , KC_DEL   , XXXXXXX , XXXXXXX,
                                           XXXXXXX , XXXXXXX , XXXXXXX ,     XXXXXXX , MO(_NUMBERS) , XXXXXXX
 ),
 
@@ -159,20 +165,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 // diferent keys get different tapping terms
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        // jesus fuck is alt fucking annoying. Might even have to disable alt tapping altogether.
-        case LALT_T(KC_A):
-        case LALT_T(KC_O):
-            return TAPPING_TERM + 300;
-//        case LSFT_T(KC_G):
-//            return TAPPING_TERM + 0;
-//        case LSFT_T(KC_N):
-//            return TAPPING_TERM + 0;
-        default:
-            return TAPPING_TERM;
-    }
-}
+// uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//         // jesus fuck is alt fucking annoying. Might even have to disable alt tapping altogether.
+//         case LALT_T(KC_A):
+//         case LALT_T(KC_O):
+//             return TAPPING_TERM + 300;
+// //        case LSFT_T(KC_G):
+// //            return TAPPING_TERM + 0;
+// //        case LSFT_T(KC_N):
+// //            return TAPPING_TERM + 0;
+//         default:
+//             return TAPPING_TERM;
+//     }
+// }
 
 /*
  */
@@ -191,8 +197,20 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
     // BUG: only the key on the master side turns red?
 
     switch(keycode) {
-        // normal keys
-        case KC_A ... KC_Z:
+        // normal keys, vowels in cyan, remainder in blue
+        case KC_A:
+        case KC_E:
+        case KC_I:
+        case KC_O:
+        case KC_U:
+            hsv = (hsv_t) {HSV_CYAN};
+            hsv.v = 100;
+            break;
+        case KC_B ... KC_D:
+        case KC_F ... KC_H:
+        case KC_J ... KC_N:
+        case KC_P ... KC_T:
+        case KC_V ... KC_Z:
             hsv = (hsv_t) {HSV_BLUE};
             hsv.v = 100;
             break;
@@ -251,6 +269,17 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
         case KC_KB_VOLUME_DOWN:
             hsv = (hsv_t) {HSV_YELLOW};
             hsv.v = 100;
+            break;
+        // can switch to base
+        case PDF(_BASE):
+            hsv = (hsv_t) {HSV_MAGENTA};
+            hsv.v = 100;
+            break;
+        // can switch to gallium
+        case PDF(_GALLIUM):
+            hsv = (hsv_t) {HSV_YELLOW};
+            hsv.v = 100;
+            break;
         case TO(_BASE):
             hsv = (hsv_t) {HSV_MAGENTA};
             hsv.v = 50;
@@ -397,10 +426,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  */
 
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BACKSPACE, KC_DEL);
+const key_override_t shift_dot_override = ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_COLON);
+const key_override_t shift_comma_override = ko_make_basic(MOD_MASK_SHIFT, KC_COMMA, KC_SEMICOLON);
 
 // This globally defines all key overrides to be used
 const key_override_t *key_overrides[] = {
-    &delete_key_override
+    &delete_key_override,
+    &shift_dot_override,
+    &shift_comma_override,
+    NULL,
 };
 
 
@@ -433,18 +467,18 @@ const key_override_t *key_overrides[] = {
 //};
 
 enum combos {
-    // left-hand side of the keyboard
-    FP_ESCAPE,
-    ST_LCTL,
-    RT_LGUI,
-    AT_LALT,
-    RST_LCTLLGUI,
-    // right-hand side of the keyboard
-    LU_ENTER,
-    NE_LCTL,
-    NI_LGUI,
-    NO_LALT,
-    NEI_LCTLLGUI,
+//    // left-hand side of the keyboard
+//    FP_ESCAPE,
+//    ST_LCTL,
+//    RT_LGUI,
+//    AT_LALT,
+//    RST_LCTLLGUI,
+//    // right-hand side of the keyboard
+//    LU_ENTER,
+//    NE_LCTL,
+//    NI_LGUI,
+//    NO_LALT,
+//    NEI_LCTLLGUI,
     // termination
     COMBO_LENGTH
 };
@@ -464,17 +498,18 @@ const uint16_t PROGMEM nei_combo[] = {KC_N, KC_E, KC_I, COMBO_END};
 
 
 combo_t key_combos[] = {
-    //arst
-    [FP_ESCAPE] = COMBO(fp_combo, KC_ESC),
-    [ST_LCTL]   = COMBO(st_combo, KC_LCTL),
-    [RT_LGUI]   = COMBO(rt_combo, KC_LGUI),
-    [AT_LALT]   = COMBO(at_combo, KC_LALT),
-    [RST_LCTLLGUI]   = COMBO(rst_combo, LCTL(KC_LGUI)),
-    //
-    [LU_ENTER] = COMBO(lu_combo, KC_ENTER),
-    [NE_LCTL] = COMBO(ne_combo, KC_LCTL),
-    [NI_LGUI] = COMBO(ni_combo, KC_LGUI),
-    [NO_LALT] = COMBO(no_combo, KC_LALT),
-    [NEI_LCTLLGUI] = COMBO(nei_combo, LCTL(KC_LGUI)),
+//    //arst
+//    [FP_ESCAPE] = COMBO(fp_combo, KC_ESC),
+//    [ST_LCTL]   = COMBO(st_combo, KC_LCTL),
+//    [RT_LGUI]   = COMBO(rt_combo, KC_LGUI),
+//    [AT_LALT]   = COMBO(at_combo, KC_LALT),
+//    [RST_LCTLLGUI]   = COMBO(rst_combo, LCTL(KC_LGUI)),
+//    //
+//    [LU_ENTER] = COMBO(lu_combo, KC_ENTER),
+//    [NE_LCTL] = COMBO(ne_combo, KC_LCTL),
+//    [NI_LGUI] = COMBO(ni_combo, KC_LGUI),
+//    [NO_LALT] = COMBO(no_combo, KC_LALT),
+//    [NEI_LCTLLGUI] = COMBO(nei_combo, LCTL(KC_LGUI)),
+    NULL,
 };
 
