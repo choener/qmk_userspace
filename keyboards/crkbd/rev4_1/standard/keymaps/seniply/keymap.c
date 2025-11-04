@@ -70,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //    ┌─────────┬───┬───┬───┬─────────┬─────────┬───────────────┐   ┌───────────────┬───────────┬────────┬───┬───┬───┬──────┐
 //    │ OS_LALT │ q │ w │ f │    p    │    b    │ PDF(_GALLIUM) │   │      no       │     j     │   l    │ u │ y │ ' │  -   │
 //    ├─────────┼───┼───┼───┼─────────┼─────────┼───────────────┤   ├───────────────┼───────────┼────────┼───┼───┼───┼──────┤
-//    │ OS_LGUI │ a │ r │ s │    t    │    g    │      no       │   │      no       │     m     │   n    │ e │ i │ o │ esc  │
+//    │ OS_LGUI │ a │ r │ s │    t    │    g    │   TO(_BASE)   │   │      no       │     m     │   n    │ e │ i │ o │ esc  │
 //    ├─────────┼───┼───┼───┼─────────┼─────────┼───────────────┘   └───────────────┼───────────┼────────┼───┼───┼───┼──────┤
 //    │ OS_LSFT │ z │ x │ c │    d    │    v    │                                   │     k     │   h    │ . │ , │ / │ bspc │
 //    └─────────┴───┴───┴───┼─────────┼─────────┼───────────────┐   ┌───────────────┼───────────┼────────┼───┴───┴───┴──────┘
@@ -78,25 +78,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                          └─────────┴─────────┴───────────────┘   └───────────────┴───────────┴────────┘
 [_BASE] = LAYOUT_split_3x6_3_ex2(
   OS_LALT , KC_Q , KC_W , KC_F , KC_P    , KC_B    , PDF(_GALLIUM) ,     XXXXXXX       , KC_J      , KC_L   , KC_U   , KC_Y     , KC_QUOTE , KC_MINUS,
-  OS_LGUI , KC_A , KC_R , KC_S , KC_T    , KC_G    , XXXXXXX       ,     XXXXXXX       , KC_M      , KC_N   , KC_E   , KC_I     , KC_O     , KC_ESC  ,
+  OS_LGUI , KC_A , KC_R , KC_S , KC_T    , KC_G    , TO(_BASE)     ,     XXXXXXX       , KC_M      , KC_N   , KC_E   , KC_I     , KC_O     , KC_ESC  ,
   OS_LSFT , KC_Z , KC_X , KC_C , KC_D    , KC_V    ,                                     KC_K      , KC_H   , KC_DOT , KC_COMMA , KC_SLASH , KC_BSPC ,
                                  QK_AREP , SPC_NAV , OS_LCTL       ,     OSM(MOD_LSFT) , ENTER_SYM , QK_REP
 ),
 
-//    ┌─────────┬───┬───┬───┬─────────┬─────────┬────────────┐   ┌─────────┬───────────┬────────┬───┬───┬────┬──────┐
-//    │ OS_LALT │ b │ l │ d │    c    │    v    │ PDF(_BASE) │   │   no    │     z     │   y    │ o │ u │ no │  -   │
-//    ├─────────┼───┼───┼───┼─────────┼─────────┼────────────┤   ├─────────┼───────────┼────────┼───┼───┼────┼──────┤
-//    │ OS_LGUI │ n │ r │ s │    t    │    g    │     no     │   │   no    │     p     │   h    │ a │ e │ i  │ esc  │
-//    ├─────────┼───┼───┼───┼─────────┼─────────┼────────────┘   └─────────┼───────────┼────────┼───┼───┼────┼──────┤
-//    │ OS_LSFT │ x │ q │ m │    w    │    j    │                          │     k     │   f    │ . │ , │ /  │ bspc │
-//    └─────────┴───┴───┴───┼─────────┼─────────┼────────────┐   ┌─────────┼───────────┼────────┼───┴───┴────┴──────┘
-//                          │ QK_AREP │ SPC_NAV │  OS_LCTL   │   │ OS_LSFT │ ENTER_SYM │ QK_REP │
-//                          └─────────┴─────────┴────────────┘   └─────────┴───────────┴────────┘
+//    ┌─────────┬───┬───┬───┬─────────┬─────────┬──────────────┐   ┌─────────┬───────────┬────────┬───┬───┬───┬──────┐
+//    │ OS_LALT │ b │ l │ d │    c    │    v    │  PDF(_BASE)  │   │   no    │     z     │   y    │ o │ u │ ' │  -   │
+//    ├─────────┼───┼───┼───┼─────────┼─────────┼──────────────┤   ├─────────┼───────────┼────────┼───┼───┼───┼──────┤
+//    │ OS_LGUI │ n │ r │ s │    t    │    g    │ TO(_GALLIUM) │   │   no    │     p     │   h    │ a │ e │ i │ esc  │
+//    ├─────────┼───┼───┼───┼─────────┼─────────┼──────────────┘   └─────────┼───────────┼────────┼───┼───┼───┼──────┤
+//    │ OS_LSFT │ x │ q │ m │    w    │    j    │                            │     k     │   f    │ . │ , │ / │ bspc │
+//    └─────────┴───┴───┴───┼─────────┼─────────┼──────────────┐   ┌─────────┼───────────┼────────┼───┴───┴───┴──────┘
+//                          │ QK_AREP │ SPC_NAV │   OS_LCTL    │   │ OS_LSFT │ ENTER_SYM │ QK_REP │
+//                          └─────────┴─────────┴──────────────┘   └─────────┴───────────┴────────┘
 [_GALLIUM] = LAYOUT_split_3x6_3_ex2(
-  OS_LALT , KC_B , KC_L , KC_D , KC_C    , KC_V    , PDF(_BASE) ,     XXXXXXX , KC_Z      , KC_Y   , KC_O   , KC_U     , XXXXXXX  , KC_MINUS,
-  OS_LGUI , KC_N , KC_R , KC_S , KC_T    , KC_G    , XXXXXXX    ,     XXXXXXX , KC_P      , KC_H   , KC_A   , KC_E     , KC_I     , KC_ESC  ,
-  OS_LSFT , KC_X , KC_Q , KC_M , KC_W    , KC_J    ,                            KC_K      , KC_F   , KC_DOT , KC_COMMA , KC_SLASH , KC_BSPC ,
-                                 QK_AREP , SPC_NAV , OS_LCTL    ,     OS_LSFT , ENTER_SYM , QK_REP
+  OS_LALT , KC_B , KC_L , KC_D , KC_C    , KC_V    , PDF(_BASE)   ,     XXXXXXX , KC_Z      , KC_Y   , KC_O   , KC_U     , KC_QUOTE , KC_MINUS,
+  OS_LGUI , KC_N , KC_R , KC_S , KC_T    , KC_G    , TO(_GALLIUM) ,     XXXXXXX , KC_P      , KC_H   , KC_A   , KC_E     , KC_I     , KC_ESC  ,
+  OS_LSFT , KC_X , KC_Q , KC_M , KC_W    , KC_J    ,                              KC_K      , KC_F   , KC_DOT , KC_COMMA , KC_SLASH , KC_BSPC ,
+                                 QK_AREP , SPC_NAV , OS_LCTL      ,     OS_LSFT , ENTER_SYM , QK_REP
 ),
 
 //    ┌────┬─────────┬─────────┬─────────┬─────────┬────┬─────────┐   ┌────┬──────────────┬──────┬──────┬──────┬────┬────┐
@@ -281,10 +281,11 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
             hsv.v = 100;
             break;
         case TO(_BASE):
+        case TO(_GALLIUM):
             hsv = (hsv_t) {HSV_MAGENTA};
             hsv.v = 50;
             // light up when return is possible (it always is...)
-            if (layer > 0 || osm) {
+            if (layer > _GALLIUM || osm) {
                 hsv = (hsv_t) {HSV_MAGENTA};
                 hsv.v = 250;
             };
@@ -390,7 +391,7 @@ void rgb_matrix_per_index(uint8_t led_min, uint8_t led_max, uint8_t layer, uint8
  */
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    uint8_t layer = get_highest_layer(layer_state);
+    uint8_t layer = get_highest_layer(layer_state | default_layer_state);
     uint8_t mods = get_mods();
     for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
         for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
@@ -413,6 +414,7 @@ void keyboard_post_init_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case TO(_BASE):
+        case TO(_GALLIUM):
             // we handle to->base special. It first disables all one-shot modifiers, then (via return true) still returns us to the base layer.
             reset_oneshot_layer();
             clear_oneshot_mods();
