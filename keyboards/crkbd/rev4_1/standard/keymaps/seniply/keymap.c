@@ -72,14 +72,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //    ├─────────┼───┼───┼───┼─────────┼─────────┼───────────────┤   ├───────────────┼───────────┼────────┼───┼───┼───┼──────┤
 //    │ OS_LGUI │ a │ r │ s │    t    │    g    │   TO(_BASE)   │   │      no       │     m     │   n    │ e │ i │ o │ esc  │
 //    ├─────────┼───┼───┼───┼─────────┼─────────┼───────────────┘   └───────────────┼───────────┼────────┼───┼───┼───┼──────┤
-//    │ OS_LSFT │ z │ x │ c │    d    │    v    │                                   │     k     │   h    │ . │ , │ / │ bspc │
+//    │ OS_LSFT │ z │ x │ c │    d    │    v    │                                   │     k     │   h    │ , │ . │ / │ bspc │
 //    └─────────┴───┴───┴───┼─────────┼─────────┼───────────────┐   ┌───────────────┼───────────┼────────┼───┴───┴───┴──────┘
 //                          │ QK_AREP │ SPC_NAV │    OS_LCTL    │   │ OSM(MOD_LSFT) │ ENTER_SYM │ QK_REP │
 //                          └─────────┴─────────┴───────────────┘   └───────────────┴───────────┴────────┘
 [_BASE] = LAYOUT_split_3x6_3_ex2(
-  OS_LALT , KC_Q , KC_W , KC_F , KC_P    , KC_B    , PDF(_GALLIUM) ,     XXXXXXX       , KC_J      , KC_L   , KC_U   , KC_Y     , KC_QUOTE , KC_MINUS,
-  OS_LGUI , KC_A , KC_R , KC_S , KC_T    , KC_G    , TO(_BASE)     ,     XXXXXXX       , KC_M      , KC_N   , KC_E   , KC_I     , KC_O     , KC_ESC  ,
-  OS_LSFT , KC_Z , KC_X , KC_C , KC_D    , KC_V    ,                                     KC_K      , KC_H   , KC_DOT , KC_COMMA , KC_SLASH , KC_BSPC ,
+  OS_LALT , KC_Q , KC_W , KC_F , KC_P    , KC_B    , PDF(_GALLIUM) ,     XXXXXXX       , KC_J      , KC_L   , KC_U     , KC_Y   , KC_QUOTE , KC_MINUS,
+  OS_LGUI , KC_A , KC_R , KC_S , KC_T    , KC_G    , TO(_BASE)     ,     XXXXXXX       , KC_M      , KC_N   , KC_E     , KC_I   , KC_O     , KC_ESC  ,
+  OS_LSFT , KC_Z , KC_X , KC_C , KC_D    , KC_V    ,                                     KC_K      , KC_H   , KC_COMMA , KC_DOT , KC_SLASH , KC_BSPC ,
                                  QK_AREP , SPC_NAV , OS_LCTL       ,     OSM(MOD_LSFT) , ENTER_SYM , QK_REP
 ),
 
@@ -88,14 +88,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //    ├─────────┼───┼───┼───┼─────────┼─────────┼──────────────┤   ├─────────┼───────────┼────────┼───┼───┼───┼──────┤
 //    │ OS_LGUI │ n │ r │ s │    t    │    g    │ TO(_GALLIUM) │   │   no    │     p     │   h    │ a │ e │ i │ esc  │
 //    ├─────────┼───┼───┼───┼─────────┼─────────┼──────────────┘   └─────────┼───────────┼────────┼───┼───┼───┼──────┤
-//    │ OS_LSFT │ x │ q │ m │    w    │    j    │                            │     k     │   f    │ . │ , │ / │ bspc │
+//    │ OS_LSFT │ x │ q │ m │    w    │    j    │                            │     k     │   f    │ , │ . │ / │ bspc │
 //    └─────────┴───┴───┴───┼─────────┼─────────┼──────────────┐   ┌─────────┼───────────┼────────┼───┴───┴───┴──────┘
 //                          │ QK_AREP │ SPC_NAV │   OS_LCTL    │   │ OS_LSFT │ ENTER_SYM │ QK_REP │
 //                          └─────────┴─────────┴──────────────┘   └─────────┴───────────┴────────┘
 [_GALLIUM] = LAYOUT_split_3x6_3_ex2(
-  OS_LALT , KC_B , KC_L , KC_D , KC_C    , KC_V    , PDF(_BASE)   ,     XXXXXXX , KC_Z      , KC_Y   , KC_O   , KC_U     , KC_QUOTE , KC_MINUS,
-  OS_LGUI , KC_N , KC_R , KC_S , KC_T    , KC_G    , TO(_GALLIUM) ,     XXXXXXX , KC_P      , KC_H   , KC_A   , KC_E     , KC_I     , KC_ESC  ,
-  OS_LSFT , KC_X , KC_Q , KC_M , KC_W    , KC_J    ,                              KC_K      , KC_F   , KC_DOT , KC_COMMA , KC_SLASH , KC_BSPC ,
+  OS_LALT , KC_B , KC_L , KC_D , KC_C    , KC_V    , PDF(_BASE)   ,     XXXXXXX , KC_Z      , KC_Y   , KC_O     , KC_U   , KC_QUOTE , KC_MINUS,
+  OS_LGUI , KC_N , KC_R , KC_S , KC_T    , KC_G    , TO(_GALLIUM) ,     XXXXXXX , KC_P      , KC_H   , KC_A     , KC_E   , KC_I     , KC_ESC  ,
+  OS_LSFT , KC_X , KC_Q , KC_M , KC_W    , KC_J    ,                              KC_K      , KC_F   , KC_COMMA , KC_DOT , KC_SLASH , KC_BSPC ,
                                  QK_AREP , SPC_NAV , OS_LCTL      ,     OS_LSFT , ENTER_SYM , QK_REP
 ),
 
@@ -427,12 +427,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 /* KEY OVERRIDE
  */
 
+const key_override_t shift_space_override = ko_make_basic(MOD_MASK_SHIFT, SPC_NAV, KC_BACKSPACE);
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BACKSPACE, KC_DEL);
 const key_override_t shift_dot_override = ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_COLON);
 const key_override_t shift_comma_override = ko_make_basic(MOD_MASK_SHIFT, KC_COMMA, KC_SEMICOLON);
 
 // This globally defines all key overrides to be used
 const key_override_t *key_overrides[] = {
+    &shift_space_override,
     &delete_key_override,
     &shift_dot_override,
     &shift_comma_override,
